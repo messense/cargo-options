@@ -45,3 +45,15 @@ impl DerefMut for Run {
         &mut self.common
     }
 }
+
+impl From<Run> for crate::Build {
+    fn from(run: Run) -> Self {
+        crate::Build {
+            common: run.common,
+            packages: run.packages.map(|p| vec![p]).unwrap_or_default(),
+            bin: run.bin,
+            example: run.example,
+            ..Default::default()
+        }
+    }
+}

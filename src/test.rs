@@ -114,3 +114,27 @@ impl DerefMut for Test {
         &mut self.common
     }
 }
+
+impl From<Test> for crate::Build {
+    fn from(test: Test) -> Self {
+        crate::Build {
+            common: test.common,
+            packages: test.packages,
+            workspace: test.workspace,
+            exclude: test.exclude,
+            all: test.all,
+            lib: test.lib,
+            bin: test.bin,
+            bins: test.bins,
+            example: test.example,
+            examples: test.examples,
+            test: test.test,
+            tests: test.tests,
+            bench: test.bench,
+            benches: test.benches,
+            all_targets: test.all_targets,
+            future_incompat_report: test.future_incompat_report,
+            ..Default::default()
+        }
+    }
+}

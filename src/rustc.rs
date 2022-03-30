@@ -60,10 +60,6 @@ pub struct Rustc {
     #[clap(long)]
     pub all_targets: bool,
 
-    /// Do not activate the `default` feature
-    #[clap(long)]
-    pub no_default_features: bool,
-
     /// Output compiler information without compiling
     #[clap(long, value_name = "INFO")]
     pub print: Option<String>,
@@ -97,5 +93,26 @@ impl Deref for Rustc {
 impl DerefMut for Rustc {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.common
+    }
+}
+
+impl From<Rustc> for crate::Build {
+    fn from(rustc: Rustc) -> Self {
+        crate::Build {
+            common: rustc.common,
+            packages: rustc.packages,
+            lib: rustc.lib,
+            bin: rustc.bin,
+            bins: rustc.bins,
+            example: rustc.example,
+            examples: rustc.examples,
+            test: rustc.test,
+            tests: rustc.tests,
+            bench: rustc.bench,
+            benches: rustc.benches,
+            all_targets: rustc.all_targets,
+            future_incompat_report: rustc.future_incompat_report,
+            ..Default::default()
+        }
     }
 }
