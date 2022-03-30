@@ -1,3 +1,4 @@
+use std::ops::{Deref, DerefMut};
 use std::path::PathBuf;
 
 use clap::Parser;
@@ -83,4 +84,18 @@ pub struct Build {
     /// Outputs a future incompatibility report at the end of the build (unstable)
     #[clap(long)]
     pub future_incompat_report: bool,
+}
+
+impl Deref for Build {
+    type Target = CommonOptions;
+
+    fn deref(&self) -> &Self::Target {
+        &self.common
+    }
+}
+
+impl DerefMut for Build {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.common
+    }
 }

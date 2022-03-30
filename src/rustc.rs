@@ -1,3 +1,5 @@
+use std::ops::{Deref, DerefMut};
+
 use clap::Parser;
 
 use crate::common::CommonOptions;
@@ -82,4 +84,18 @@ pub struct Rustc {
     /// Rustc flags
     #[clap(takes_value = true, multiple_values = true)]
     pub args: Vec<String>,
+}
+
+impl Deref for Rustc {
+    type Target = CommonOptions;
+
+    fn deref(&self) -> &Self::Target {
+        &self.common
+    }
+}
+
+impl DerefMut for Rustc {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.common
+    }
 }

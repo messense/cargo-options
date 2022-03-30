@@ -1,3 +1,5 @@
+use std::ops::{Deref, DerefMut};
+
 use clap::Parser;
 
 use crate::common::CommonOptions;
@@ -28,4 +30,18 @@ pub struct Run {
     /// Arguments for the binary to run
     #[clap(takes_value = true, multiple_values = true)]
     pub args: Vec<String>,
+}
+
+impl Deref for Run {
+    type Target = CommonOptions;
+
+    fn deref(&self) -> &Self::Target {
+        &self.common
+    }
+}
+
+impl DerefMut for Run {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.common
+    }
 }
