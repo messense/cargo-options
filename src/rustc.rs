@@ -5,7 +5,6 @@ use clap::Parser;
 use crate::common::CommonOptions;
 
 /// Compile a package, and pass extra options to the compiler
-/// with zig as the linker
 #[derive(Clone, Debug, Default, Parser)]
 #[clap(
     setting = clap::AppSettings::DeriveDisplayOrder,
