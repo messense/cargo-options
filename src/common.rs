@@ -89,4 +89,14 @@ pub struct CommonOptions {
     /// Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details
     #[clap(short = 'Z', value_name = "FLAG", multiple_values = true)]
     pub unstable_flags: Vec<String>,
+
+    /// Timing output formats (unstable) (comma separated): html, json
+    #[clap(
+        long,
+        value_name = "FMTS",
+        min_values = 0,
+        value_delimiter = ',',
+        require_equals = true
+    )]
+    pub timings: Option<Vec<String>>,
 }
