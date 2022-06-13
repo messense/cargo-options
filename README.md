@@ -12,7 +12,7 @@ Add it to your ``Cargo.toml``:
 
 ```toml
 [dependencies]
-cargo-options = "0.1"
+cargo-options = "0.2"
 ```
 
 ## License
