@@ -1,4 +1,5 @@
 use std::ops::{Deref, DerefMut};
+use std::process::Command;
 
 use clap::Parser;
 
@@ -30,6 +31,32 @@ pub struct Run {
     /// Arguments for the binary to run
     #[clap(takes_value = true, multiple_values = true)]
     pub args: Vec<String>,
+}
+
+impl Run {
+    /// Build a `cargo run` command
+    pub fn command(&self) -> Command {
+        let mut cmd = Command::new(CommonOptions::cargo_path());
+        cmd.arg("run");
+
+        self.common.apply(&mut cmd);
+
+        for pkg in &self.packages {
+            cmd.arg("--package").arg(pkg);
+        }
+        for bin in &self.bin {
+            cmd.arg("--bin").arg(bin);
+        }
+        for example in &self.example {
+            cmd.arg("--example").arg(example);
+        }
+        if !self.args.is_empty() {
+            cmd.arg("--");
+            cmd.args(&self.args);
+        }
+
+        cmd
+    }
 }
 
 impl Deref for Run {
