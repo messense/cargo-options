@@ -12,3 +12,6 @@ repository = "https://github.com/messense/cargo-options"
 
 [dependencies]
 clap = { version = "3.1.2", features = ["derive", "env", "wrap_help"] }
+
+[features]
+maturin = []
