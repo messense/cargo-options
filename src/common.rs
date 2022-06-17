@@ -14,6 +14,10 @@ pub struct CommonOptions {
     #[clap(short = 'j', long, value_name = "N")]
     pub jobs: Option<usize>,
 
+    /// Do not abort the build as soon as there is an error (unstable)
+    #[clap(long)]
+    pub keep_going: bool,
+
     /// Build artifacts in release mode, with optimizations
     #[clap(short = 'r', long)]
     pub release: bool,
@@ -110,6 +114,9 @@ impl CommonOptions {
         }
         if let Some(jobs) = self.jobs {
             cmd.arg("--jobs").arg(jobs.to_string());
+        }
+        if self.keep_going {
+            cmd.arg("--keep-going");
         }
         if self.release {
             cmd.arg("--release");
