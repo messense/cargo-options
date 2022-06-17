@@ -49,7 +49,6 @@ pub struct CommonOptions {
 
     /// Path to Cargo.toml
     #[clap(long, value_name = "PATH", parse(from_os_str))]
-    #[cfg_attr(feature = "maturin", clap(short = 'm'))]
     pub manifest_path: Option<PathBuf>,
 
     /// Ignore `rust-version` specification in packages
