@@ -105,7 +105,7 @@ pub struct Test {
 impl Test {
     /// Build a `cargo test` command
     pub fn command(&self) -> Command {
-        let mut cmd = Command::new(CommonOptions::cargo_path());
+        let mut cmd = CommonOptions::cargo_command();
         cmd.arg("test");
 
         self.common.apply(&mut cmd);

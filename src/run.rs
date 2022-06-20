@@ -36,7 +36,7 @@ pub struct Run {
 impl Run {
     /// Build a `cargo run` command
     pub fn command(&self) -> Command {
-        let mut cmd = Command::new(CommonOptions::cargo_path());
+        let mut cmd = CommonOptions::cargo_command();
         cmd.arg("run");
 
         self.common.apply(&mut cmd);

@@ -85,7 +85,7 @@ pub struct Rustc {
 impl Rustc {
     /// Build a `cargo rustc` command
     pub fn command(&self) -> Command {
-        let mut cmd = Command::new(CommonOptions::cargo_path());
+        let mut cmd = CommonOptions::cargo_command();
         cmd.arg("rustc");
 
         self.common.apply(&mut cmd);

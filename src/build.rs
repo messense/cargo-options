@@ -90,7 +90,7 @@ pub struct Build {
 impl Build {
     /// Build a `cargo build` command
     pub fn command(&self) -> Command {
-        let mut cmd = Command::new(CommonOptions::cargo_path());
+        let mut cmd = CommonOptions::cargo_command();
         cmd.arg("build");
 
         self.common.apply(&mut cmd);
