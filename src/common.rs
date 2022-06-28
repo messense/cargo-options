@@ -27,7 +27,7 @@ pub struct CommonOptions {
     pub profile: Option<String>,
 
     /// Space or comma separated list of features to activate
-    #[clap(long, multiple_values = true)]
+    #[clap(long, multiple_occurrences = true)]
     pub features: Vec<String>,
 
     /// Activate all available features
@@ -88,11 +88,11 @@ pub struct CommonOptions {
     pub offline: bool,
 
     /// Override a configuration value (unstable)
-    #[clap(long, value_name = "KEY=VALUE", multiple_values = true)]
+    #[clap(long, value_name = "KEY=VALUE", multiple_occurrences = true)]
     pub config: Vec<String>,
 
     /// Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details
-    #[clap(short = 'Z', value_name = "FLAG", multiple_values = true)]
+    #[clap(short = 'Z', value_name = "FLAG", multiple_occurrences = true)]
     pub unstable_flags: Vec<String>,
 
     /// Timing output formats (unstable) (comma separated): html, json
