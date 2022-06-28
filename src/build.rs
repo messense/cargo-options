@@ -18,6 +18,8 @@ pub struct Build {
         short = 'p',
         long = "package",
         value_name = "SPEC",
+        min_values = 0,
+        number_of_values = 1,
         multiple_values = true
     )]
     pub packages: Vec<String>,
@@ -27,7 +29,7 @@ pub struct Build {
     pub workspace: bool,
 
     /// Exclude packages from the build
-    #[clap(long, value_name = "SPEC", multiple_values = true)]
+    #[clap(long, value_name = "SPEC", multiple_occurrences = true)]
     pub exclude: Vec<String>,
 
     /// Alias for workspace (deprecated)
@@ -39,7 +41,13 @@ pub struct Build {
     pub lib: bool,
 
     /// Build only the specified binary
-    #[clap(long, value_name = "NAME", multiple_values = true)]
+    #[clap(
+        long,
+        value_name = "NAME",
+        multiple_values = true,
+        min_values = 0,
+        number_of_values = 1
+    )]
     pub bin: Vec<String>,
 
     /// Build all binaries
@@ -47,7 +55,13 @@ pub struct Build {
     pub bins: bool,
 
     /// Build only the specified example
-    #[clap(long, value_name = "NAME", multiple_values = true)]
+    #[clap(
+        long,
+        value_name = "NAME",
+        multiple_values = true,
+        min_values = 0,
+        number_of_values = 1
+    )]
     pub example: Vec<String>,
 
     /// Build all examples
@@ -55,7 +69,13 @@ pub struct Build {
     pub examples: bool,
 
     /// Build only the specified test target
-    #[clap(long, value_name = "NAME", multiple_values = true)]
+    #[clap(
+        long,
+        value_name = "NAME",
+        multiple_values = true,
+        min_values = 0,
+        number_of_values = 1
+    )]
     pub test: Vec<String>,
 
     /// Build all tests
@@ -63,7 +83,13 @@ pub struct Build {
     pub tests: bool,
 
     /// Build only the specified bench target
-    #[clap(long, value_name = "NAME", multiple_values = true)]
+    #[clap(
+        long,
+        value_name = "NAME",
+        multiple_values = true,
+        min_values = 0,
+        number_of_values = 1
+    )]
     pub bench: Vec<String>,
 
     /// Build all benches

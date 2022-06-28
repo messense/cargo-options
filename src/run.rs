@@ -17,19 +17,37 @@ pub struct Run {
     pub common: CommonOptions,
 
     /// Package to run (see `cargo help pkgid`)
-    #[clap(short = 'p', long = "package", value_name = "SPEC")]
-    pub packages: Option<String>,
+    #[clap(
+        short = 'p',
+        long = "package",
+        value_name = "SPEC",
+        min_values = 0,
+        multiple_occurrences = true
+    )]
+    pub packages: Vec<String>,
 
     /// Run the specified binary
-    #[clap(long, value_name = "NAME", multiple_values = true)]
+    #[clap(
+        long,
+        value_name = "NAME",
+        multiple_values = true,
+        min_values = 0,
+        number_of_values = 1
+    )]
     pub bin: Vec<String>,
 
     /// Run the specified example
-    #[clap(long, value_name = "NAME", multiple_values = true)]
+    #[clap(
+        long,
+        value_name = "NAME",
+        multiple_values = true,
+        min_values = 0,
+        number_of_values = 1
+    )]
     pub example: Vec<String>,
 
     /// Arguments for the binary to run
-    #[clap(takes_value = true, multiple_values = true)]
+    #[clap(value_name = "args", takes_value = true, multiple_values = true)]
     pub args: Vec<String>,
 }
 

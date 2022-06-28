@@ -60,7 +60,7 @@ pub struct CommonOptions {
     pub ignore_rust_version: bool,
 
     /// Error format
-    #[clap(long, value_name = "FMT", multiple_values = true)]
+    #[clap(long, value_name = "FMT", multiple_occurrences = true)]
     pub message_format: Vec<String>,
 
     /// Output build graph in JSON (unstable)

@@ -21,6 +21,8 @@ pub struct Test {
         short = 'p',
         long = "package",
         value_name = "SPEC",
+        min_values = 0,
+        number_of_values = 1,
         multiple_values = true
     )]
     pub packages: Vec<String>,
@@ -30,7 +32,7 @@ pub struct Test {
     pub workspace: bool,
 
     /// Exclude packages from the build
-    #[clap(long, value_name = "SPEC", multiple_values = true)]
+    #[clap(long, value_name = "SPEC", multiple_occurrences = true)]
     pub exclude: Vec<String>,
 
     /// Alias for workspace (deprecated)
@@ -42,7 +44,13 @@ pub struct Test {
     pub lib: bool,
 
     /// Test only the specified binary
-    #[clap(long, value_name = "NAME", multiple_values = true)]
+    #[clap(
+        long,
+        value_name = "NAME",
+        multiple_values = true,
+        min_values = 0,
+        number_of_values = 1
+    )]
     pub bin: Vec<String>,
 
     /// Test all binaries
@@ -50,7 +58,13 @@ pub struct Test {
     pub bins: bool,
 
     /// Test only the specified example
-    #[clap(long, value_name = "NAME", multiple_values = true)]
+    #[clap(
+        long,
+        value_name = "NAME",
+        multiple_values = true,
+        min_values = 0,
+        number_of_values = 1
+    )]
     pub example: Vec<String>,
 
     /// Test all examples
@@ -58,7 +72,13 @@ pub struct Test {
     pub examples: bool,
 
     /// Test only the specified test target
-    #[clap(long, value_name = "NAME", multiple_values = true)]
+    #[clap(
+        long,
+        value_name = "NAME",
+        multiple_values = true,
+        min_values = 0,
+        number_of_values = 1
+    )]
     pub test: Vec<String>,
 
     /// Test all tests
@@ -66,7 +86,13 @@ pub struct Test {
     pub tests: bool,
 
     /// Test only the specified bench target
-    #[clap(long, value_name = "NAME", multiple_values = true)]
+    #[clap(
+        long,
+        value_name = "NAME",
+        multiple_values = true,
+        min_values = 0,
+        number_of_values = 1
+    )]
     pub bench: Vec<String>,
 
     /// Test all benches
@@ -98,7 +124,7 @@ pub struct Test {
     pub test_name: Option<String>,
 
     /// Arguments for the test binary
-    #[clap(takes_value = true, multiple_values = true)]
+    #[clap(value_name = "args", takes_value = true, multiple_values = true)]
     pub args: Vec<String>,
 }
 

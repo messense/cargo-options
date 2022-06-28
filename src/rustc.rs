@@ -17,7 +17,13 @@ pub struct Rustc {
     pub common: CommonOptions,
 
     /// Package to build (see `cargo help pkgid`)
-    #[clap(short = 'p', long = "package", value_name = "SPEC")]
+    #[clap(
+        short = 'p',
+        long = "package",
+        value_name = "SPEC",
+        min_values = 0,
+        multiple_occurrences = true
+    )]
     pub packages: Vec<String>,
 
     /// Build only this package's library
@@ -25,7 +31,13 @@ pub struct Rustc {
     pub lib: bool,
 
     /// Build only the specified binary
-    #[clap(long, value_name = "NAME", multiple_values = true)]
+    #[clap(
+        long,
+        value_name = "NAME",
+        multiple_values = true,
+        min_values = 0,
+        number_of_values = 1
+    )]
     pub bin: Vec<String>,
 
     /// Build all binaries
@@ -33,7 +45,13 @@ pub struct Rustc {
     pub bins: bool,
 
     /// Build only the specified example
-    #[clap(long, value_name = "NAME", multiple_values = true)]
+    #[clap(
+        long,
+        value_name = "NAME",
+        multiple_values = true,
+        min_values = 0,
+        number_of_values = 1
+    )]
     pub example: Vec<String>,
 
     /// Build all examples
@@ -41,7 +59,13 @@ pub struct Rustc {
     pub examples: bool,
 
     /// Build only the specified test target
-    #[clap(long, value_name = "NAME", multiple_values = true)]
+    #[clap(
+        long,
+        value_name = "NAME",
+        multiple_values = true,
+        min_values = 0,
+        number_of_values = 1
+    )]
     pub test: Vec<String>,
 
     /// Build all tests
@@ -49,7 +73,13 @@ pub struct Rustc {
     pub tests: bool,
 
     /// Build only the specified bench target
-    #[clap(long, value_name = "NAME", multiple_values = true)]
+    #[clap(
+        long,
+        value_name = "NAME",
+        multiple_values = true,
+        min_values = 0,
+        number_of_values = 1
+    )]
     pub bench: Vec<String>,
 
     /// Build all benches
@@ -65,12 +95,7 @@ pub struct Rustc {
     pub print: Option<String>,
 
     /// Comma separated list of types of crates for the compiler to emit (unstable)
-    #[clap(
-        long,
-        value_name = "CRATE-TYPE",
-        use_value_delimiter = true,
-        multiple_values = true
-    )]
+    #[clap(long, value_name = "CRATE-TYPE", multiple_occurrences = true)]
     pub crate_type: Vec<String>,
 
     /// Outputs a future incompatibility report at the end of the build (unstable)
@@ -78,7 +103,7 @@ pub struct Rustc {
     pub future_incompat_report: bool,
 
     /// Rustc flags
-    #[clap(takes_value = true, multiple_values = true)]
+    #[clap(value_name = "args", takes_value = true, multiple_values = true)]
     pub args: Vec<String>,
 }
 
