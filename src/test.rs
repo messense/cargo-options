@@ -21,9 +21,7 @@ pub struct Test {
         short = 'p',
         long = "package",
         value_name = "SPEC",
-        min_values = 0,
-        number_of_values = 1,
-        multiple_values = true
+        multiple_occurrences = true
     )]
     pub packages: Vec<String>,
 
@@ -44,13 +42,7 @@ pub struct Test {
     pub lib: bool,
 
     /// Test only the specified binary
-    #[clap(
-        long,
-        value_name = "NAME",
-        multiple_values = true,
-        min_values = 0,
-        number_of_values = 1
-    )]
+    #[clap(long, value_name = "NAME", multiple_occurrences = true)]
     pub bin: Vec<String>,
 
     /// Test all binaries
@@ -58,13 +50,7 @@ pub struct Test {
     pub bins: bool,
 
     /// Test only the specified example
-    #[clap(
-        long,
-        value_name = "NAME",
-        multiple_values = true,
-        min_values = 0,
-        number_of_values = 1
-    )]
+    #[clap(long, value_name = "NAME", multiple_occurrences = true)]
     pub example: Vec<String>,
 
     /// Test all examples
@@ -72,13 +58,7 @@ pub struct Test {
     pub examples: bool,
 
     /// Test only the specified test target
-    #[clap(
-        long,
-        value_name = "NAME",
-        multiple_values = true,
-        min_values = 0,
-        number_of_values = 1
-    )]
+    #[clap(long, value_name = "NAME", multiple_occurrences = true)]
     pub test: Vec<String>,
 
     /// Test all tests
@@ -86,13 +66,7 @@ pub struct Test {
     pub tests: bool,
 
     /// Test only the specified bench target
-    #[clap(
-        long,
-        value_name = "NAME",
-        multiple_values = true,
-        min_values = 0,
-        number_of_values = 1
-    )]
+    #[clap(long, value_name = "NAME", multiple_occurrences = true)]
     pub bench: Vec<String>,
 
     /// Test all benches

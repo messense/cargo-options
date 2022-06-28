@@ -21,29 +21,16 @@ pub struct Run {
         short = 'p',
         long = "package",
         value_name = "SPEC",
-        min_values = 0,
         multiple_occurrences = true
     )]
     pub packages: Vec<String>,
 
     /// Run the specified binary
-    #[clap(
-        long,
-        value_name = "NAME",
-        multiple_values = true,
-        min_values = 0,
-        number_of_values = 1
-    )]
+    #[clap(long, value_name = "NAME", multiple_occurrences = true)]
     pub bin: Vec<String>,
 
     /// Run the specified example
-    #[clap(
-        long,
-        value_name = "NAME",
-        multiple_values = true,
-        min_values = 0,
-        number_of_values = 1
-    )]
+    #[clap(long, value_name = "NAME", multiple_occurrences = true)]
     pub example: Vec<String>,
 
     /// Arguments for the binary to run

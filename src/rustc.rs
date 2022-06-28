@@ -21,7 +21,6 @@ pub struct Rustc {
         short = 'p',
         long = "package",
         value_name = "SPEC",
-        min_values = 0,
         multiple_occurrences = true
     )]
     pub packages: Vec<String>,
@@ -31,13 +30,7 @@ pub struct Rustc {
     pub lib: bool,
 
     /// Build only the specified binary
-    #[clap(
-        long,
-        value_name = "NAME",
-        multiple_values = true,
-        min_values = 0,
-        number_of_values = 1
-    )]
+    #[clap(long, value_name = "NAME", multiple_occurrences = true)]
     pub bin: Vec<String>,
 
     /// Build all binaries
@@ -45,13 +38,7 @@ pub struct Rustc {
     pub bins: bool,
 
     /// Build only the specified example
-    #[clap(
-        long,
-        value_name = "NAME",
-        multiple_values = true,
-        min_values = 0,
-        number_of_values = 1
-    )]
+    #[clap(long, value_name = "NAME", multiple_occurrences = true)]
     pub example: Vec<String>,
 
     /// Build all examples
@@ -59,13 +46,7 @@ pub struct Rustc {
     pub examples: bool,
 
     /// Build only the specified test target
-    #[clap(
-        long,
-        value_name = "NAME",
-        multiple_values = true,
-        min_values = 0,
-        number_of_values = 1
-    )]
+    #[clap(long, value_name = "NAME", multiple_occurrences = true)]
     pub test: Vec<String>,
 
     /// Build all tests
@@ -73,13 +54,7 @@ pub struct Rustc {
     pub tests: bool,
 
     /// Build only the specified bench target
-    #[clap(
-        long,
-        value_name = "NAME",
-        multiple_values = true,
-        min_values = 0,
-        number_of_values = 1
-    )]
+    #[clap(long, value_name = "NAME", multiple_occurrences = true)]
     pub bench: Vec<String>,
 
     /// Build all benches
