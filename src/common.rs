@@ -192,12 +192,6 @@ impl CommonOptions {
     }
 
     pub(crate) fn cargo_command() -> Command {
-        let cargo = match std::env::var_os("CARGO") {
-            Some(cargo) => cargo.into(),
-            None => PathBuf::from("cargo"),
-        };
-        let mut cmd = Command::new(cargo);
-        cmd.env_remove("CARGO");
-        cmd
+        Command::new("cargo")
     }
 }
