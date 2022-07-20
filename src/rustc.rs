@@ -69,7 +69,7 @@ pub struct Rustc {
     #[clap(long, value_name = "INFO")]
     pub print: Option<String>,
 
-    /// Comma separated list of types of crates for the compiler to emit (unstable)
+    /// Comma separated list of types of crates for the compiler to emit
     #[clap(long, value_name = "CRATE-TYPE", multiple_occurrences = true)]
     pub crate_type: Vec<String>,
 
