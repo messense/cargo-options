@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 use std::process::Command;
 
-use clap::Parser;
+use clap::{value_parser, ArgAction, Parser};
 
 use crate::CommonOptions;
 
@@ -16,7 +16,7 @@ pub struct Metadata {
     pub quiet: bool,
 
     /// Space or comma separated list of features to activate
-    #[clap(short = 'F', long, multiple_occurrences = true)]
+    #[clap(short = 'F', long, action = ArgAction::Append)]
     pub features: Vec<String>,
 
     /// Activate all available features
@@ -28,11 +28,11 @@ pub struct Metadata {
     pub no_default_features: bool,
 
     /// Use verbose output (-vv very verbose/build.rs output)
-    #[clap(short = 'v', long, parse(from_occurrences), max_occurrences = 2)]
+    #[clap(short = 'v', long, action = ArgAction::Count, value_parser = value_parser!(u8).range(..2))]
     pub verbose: usize,
 
     /// Only include resolve dependencies matching the given target-triple
-    #[clap(long, value_name = "TRIPLE", multiple_occurrences = true)]
+    #[clap(long, value_name = "TRIPLE", action = ArgAction::Append)]
     pub filter_platform: Vec<String>,
 
     /// Output information only about the workspace members
@@ -41,11 +41,11 @@ pub struct Metadata {
     pub no_deps: bool,
 
     /// Path to Cargo.toml
-    #[clap(long, value_name = "PATH", parse(from_os_str))]
+    #[clap(long, value_name = "PATH", value_parser)]
     pub manifest_path: Option<PathBuf>,
 
     /// Format version
-    #[clap(long, value_name = "VERSION", possible_values = &["1"])]
+    #[clap(long, value_name = "VERSION", value_parser = ["1"])]
     pub format_version: Option<String>,
 
     /// Coloring: auto, always, never
@@ -65,11 +65,11 @@ pub struct Metadata {
     pub offline: bool,
 
     /// Override a configuration value (unstable)
-    #[clap(long, value_name = "KEY=VALUE", multiple_occurrences = true)]
+    #[clap(long, value_name = "KEY=VALUE", action = ArgAction::Append)]
     pub config: Vec<String>,
 
     /// Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details
-    #[clap(short = 'Z', value_name = "FLAG", multiple_occurrences = true)]
+    #[clap(short = 'Z', value_name = "FLAG", action = ArgAction::Append)]
     pub unstable_flags: Vec<String>,
 }
 
