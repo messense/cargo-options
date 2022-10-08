@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 use std::process::Command;
 
-use clap::Parser;
+use clap::{value_parser, ArgAction, Parser};
 
 /// common cargo options
 #[derive(Clone, Debug, Default, Parser)]
@@ -27,7 +27,7 @@ pub struct CommonOptions {
     pub profile: Option<String>,
 
     /// Space or comma separated list of features to activate
-    #[clap(short = 'F', long, multiple_occurrences = true)]
+    #[clap(short = 'F', long, action = ArgAction::Append)]
     pub features: Vec<String>,
 
     /// Activate all available features
@@ -43,16 +43,16 @@ pub struct CommonOptions {
         long,
         value_name = "TRIPLE",
         env = "CARGO_BUILD_TARGET",
-        multiple_occurrences = true
+        action = ArgAction::Append
     )]
     pub target: Vec<String>,
 
     /// Directory for all generated artifacts
-    #[clap(long, value_name = "DIRECTORY", parse(from_os_str))]
+    #[clap(long, value_name = "DIRECTORY", value_parser)]
     pub target_dir: Option<PathBuf>,
 
     /// Path to Cargo.toml
-    #[clap(long, value_name = "PATH", parse(from_os_str))]
+    #[clap(long, value_name = "PATH", value_parser)]
     pub manifest_path: Option<PathBuf>,
 
     /// Ignore `rust-version` specification in packages
@@ -60,7 +60,7 @@ pub struct CommonOptions {
     pub ignore_rust_version: bool,
 
     /// Error format
-    #[clap(long, value_name = "FMT", multiple_occurrences = true)]
+    #[clap(long, value_name = "FMT", action = ArgAction::Append)]
     pub message_format: Vec<String>,
 
     /// Output build graph in JSON (unstable)
@@ -68,7 +68,7 @@ pub struct CommonOptions {
     pub unit_graph: bool,
 
     /// Use verbose output (-vv very verbose/build.rs output)
-    #[clap(short = 'v', long, parse(from_occurrences), max_occurrences = 2)]
+    #[clap(short = 'v', long, action = ArgAction::Count, value_parser = value_parser!(u8).range(..2))]
     pub verbose: usize,
 
     /// Coloring: auto, always, never
@@ -88,11 +88,11 @@ pub struct CommonOptions {
     pub offline: bool,
 
     /// Override a configuration value (unstable)
-    #[clap(long, value_name = "KEY=VALUE", multiple_occurrences = true)]
+    #[clap(long, value_name = "KEY=VALUE", action = ArgAction::Append)]
     pub config: Vec<String>,
 
     /// Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details
-    #[clap(short = 'Z', value_name = "FLAG", multiple_occurrences = true)]
+    #[clap(short = 'Z', value_name = "FLAG", action = ArgAction::Append)]
     pub unstable_flags: Vec<String>,
 
     /// Timing output formats (unstable) (comma separated): html, json

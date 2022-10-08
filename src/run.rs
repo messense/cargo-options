@@ -1,7 +1,7 @@
 use std::ops::{Deref, DerefMut};
 use std::process::Command;
 
-use clap::Parser;
+use clap::{ArgAction, Parser};
 
 use crate::common::CommonOptions;
 
@@ -21,16 +21,16 @@ pub struct Run {
         short = 'p',
         long = "package",
         value_name = "SPEC",
-        multiple_occurrences = true
+        action = ArgAction::Append
     )]
     pub packages: Vec<String>,
 
     /// Run the specified binary
-    #[clap(long, value_name = "NAME", multiple_occurrences = true)]
+    #[clap(long, value_name = "NAME", action = ArgAction::Append)]
     pub bin: Vec<String>,
 
     /// Run the specified example
-    #[clap(long, value_name = "NAME", multiple_occurrences = true)]
+    #[clap(long, value_name = "NAME", action = ArgAction::Append)]
     pub example: Vec<String>,
 
     /// Arguments for the binary to run

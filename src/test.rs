@@ -1,7 +1,7 @@
 use std::ops::{Deref, DerefMut};
 use std::process::Command;
 
-use clap::Parser;
+use clap::{ArgAction, Parser};
 
 use crate::common::CommonOptions;
 
@@ -21,7 +21,7 @@ pub struct Test {
         short = 'p',
         long = "package",
         value_name = "SPEC",
-        multiple_occurrences = true
+        action = ArgAction::Append
     )]
     pub packages: Vec<String>,
 
@@ -30,7 +30,7 @@ pub struct Test {
     pub workspace: bool,
 
     /// Exclude packages from the build
-    #[clap(long, value_name = "SPEC", multiple_occurrences = true)]
+    #[clap(long, value_name = "SPEC", action = ArgAction::Append)]
     pub exclude: Vec<String>,
 
     /// Alias for workspace (deprecated)
@@ -42,7 +42,7 @@ pub struct Test {
     pub lib: bool,
 
     /// Test only the specified binary
-    #[clap(long, value_name = "NAME", multiple_occurrences = true)]
+    #[clap(long, value_name = "NAME", action = ArgAction::Append)]
     pub bin: Vec<String>,
 
     /// Test all binaries
@@ -50,7 +50,7 @@ pub struct Test {
     pub bins: bool,
 
     /// Test only the specified example
-    #[clap(long, value_name = "NAME", multiple_occurrences = true)]
+    #[clap(long, value_name = "NAME", action = ArgAction::Append)]
     pub example: Vec<String>,
 
     /// Test all examples
@@ -58,7 +58,7 @@ pub struct Test {
     pub examples: bool,
 
     /// Test only the specified test target
-    #[clap(long, value_name = "NAME", multiple_occurrences = true)]
+    #[clap(long, value_name = "NAME", action = ArgAction::Append)]
     pub test: Vec<String>,
 
     /// Test all tests
@@ -66,7 +66,7 @@ pub struct Test {
     pub tests: bool,
 
     /// Test only the specified bench target
-    #[clap(long, value_name = "NAME", multiple_occurrences = true)]
+    #[clap(long, value_name = "NAME", action = ArgAction::Append)]
     pub bench: Vec<String>,
 
     /// Test all benches

@@ -1,7 +1,7 @@
 use std::ops::{Deref, DerefMut};
 use std::process::Command;
 
-use clap::Parser;
+use clap::{ArgAction, Parser};
 
 use crate::common::CommonOptions;
 
@@ -21,7 +21,7 @@ pub struct Rustc {
         short = 'p',
         long = "package",
         value_name = "SPEC",
-        multiple_occurrences = true
+        action = ArgAction::Append
     )]
     pub packages: Vec<String>,
 
@@ -30,7 +30,7 @@ pub struct Rustc {
     pub lib: bool,
 
     /// Build only the specified binary
-    #[clap(long, value_name = "NAME", multiple_occurrences = true)]
+    #[clap(long, value_name = "NAME", action = ArgAction::Append)]
     pub bin: Vec<String>,
 
     /// Build all binaries
@@ -38,7 +38,7 @@ pub struct Rustc {
     pub bins: bool,
 
     /// Build only the specified example
-    #[clap(long, value_name = "NAME", multiple_occurrences = true)]
+    #[clap(long, value_name = "NAME", action = ArgAction::Append)]
     pub example: Vec<String>,
 
     /// Build all examples
@@ -46,7 +46,7 @@ pub struct Rustc {
     pub examples: bool,
 
     /// Build only the specified test target
-    #[clap(long, value_name = "NAME", multiple_occurrences = true)]
+    #[clap(long, value_name = "NAME", action = ArgAction::Append)]
     pub test: Vec<String>,
 
     /// Build all tests
@@ -54,7 +54,7 @@ pub struct Rustc {
     pub tests: bool,
 
     /// Build only the specified bench target
-    #[clap(long, value_name = "NAME", multiple_occurrences = true)]
+    #[clap(long, value_name = "NAME", action = ArgAction::Append)]
     pub bench: Vec<String>,
 
     /// Build all benches
@@ -70,7 +70,7 @@ pub struct Rustc {
     pub print: Option<String>,
 
     /// Comma separated list of types of crates for the compiler to emit
-    #[clap(long, value_name = "CRATE-TYPE", multiple_occurrences = true)]
+    #[clap(long, value_name = "CRATE-TYPE", action = ArgAction::Append)]
     pub crate_type: Vec<String>,
 
     /// Outputs a future incompatibility report at the end of the build (unstable)

@@ -2,7 +2,7 @@ use std::ops::{Deref, DerefMut};
 use std::path::PathBuf;
 use std::process::Command;
 
-use clap::Parser;
+use clap::{ArgAction, Parser};
 
 use crate::common::CommonOptions;
 
@@ -18,7 +18,7 @@ pub struct Build {
         short = 'p',
         long = "package",
         value_name = "SPEC",
-        multiple_occurrences = true
+        action = ArgAction::Append,
     )]
     pub packages: Vec<String>,
 
@@ -27,7 +27,7 @@ pub struct Build {
     pub workspace: bool,
 
     /// Exclude packages from the build
-    #[clap(long, value_name = "SPEC", multiple_occurrences = true)]
+    #[clap(long, value_name = "SPEC", action = ArgAction::Append)]
     pub exclude: Vec<String>,
 
     /// Alias for workspace (deprecated)
@@ -39,7 +39,7 @@ pub struct Build {
     pub lib: bool,
 
     /// Build only the specified binary
-    #[clap(long, value_name = "NAME", multiple_occurrences = true)]
+    #[clap(long, value_name = "NAME", action = ArgAction::Append)]
     pub bin: Vec<String>,
 
     /// Build all binaries
@@ -47,7 +47,7 @@ pub struct Build {
     pub bins: bool,
 
     /// Build only the specified example
-    #[clap(long, value_name = "NAME", multiple_occurrences = true)]
+    #[clap(long, value_name = "NAME", action = ArgAction::Append)]
     pub example: Vec<String>,
 
     /// Build all examples
@@ -55,7 +55,7 @@ pub struct Build {
     pub examples: bool,
 
     /// Build only the specified test target
-    #[clap(long, value_name = "NAME", multiple_occurrences = true)]
+    #[clap(long, value_name = "NAME", action = ArgAction::Append)]
     pub test: Vec<String>,
 
     /// Build all tests
@@ -63,7 +63,7 @@ pub struct Build {
     pub tests: bool,
 
     /// Build only the specified bench target
-    #[clap(long, value_name = "NAME", multiple_occurrences = true)]
+    #[clap(long, value_name = "NAME", action = ArgAction::Append)]
     pub bench: Vec<String>,
 
     /// Build all benches
@@ -75,7 +75,7 @@ pub struct Build {
     pub all_targets: bool,
 
     /// Copy final artifacts to this directory (unstable)
-    #[clap(long, value_name = "PATH", parse(from_os_str))]
+    #[clap(long, value_name = "PATH", value_parser)]
     pub out_dir: Option<PathBuf>,
 
     /// Output the build plan in JSON (unstable)
