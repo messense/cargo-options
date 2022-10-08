@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 use std::process::Command;
 
-use clap::{value_parser, ArgAction, Parser};
+use clap::{ArgAction, Parser};
 
 /// common cargo options
 #[derive(Clone, Debug, Default, Parser)]
@@ -68,8 +68,8 @@ pub struct CommonOptions {
     pub unit_graph: bool,
 
     /// Use verbose output (-vv very verbose/build.rs output)
-    #[clap(short = 'v', long, action = ArgAction::Count, value_parser = value_parser!(u8).range(..2))]
-    pub verbose: usize,
+    #[clap(short = 'v', long, action = ArgAction::Count)]
+    pub verbose: u8,
 
     /// Coloring: auto, always, never
     #[clap(long, value_name = "WHEN")]
@@ -161,7 +161,7 @@ impl CommonOptions {
             cmd.arg("--unit-graph");
         }
         if self.verbose > 0 {
-            cmd.arg(format!("-{}", "v".repeat(self.verbose)));
+            cmd.arg(format!("-{}", "v".repeat(self.verbose as usize)));
         }
         if let Some(color) = self.color.as_ref() {
             cmd.arg("--color").arg(color);
