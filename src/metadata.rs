@@ -126,3 +126,14 @@ impl Metadata {
         cmd
     }
 }
+
+#[cfg(test)]
+mod test {
+    use super::Metadata;
+    use clap::CommandFactory;
+
+    #[test]
+    fn verify_cli() {
+        <Metadata as CommandFactory>::command().debug_assert()
+    }
+}

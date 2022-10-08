@@ -153,3 +153,14 @@ impl DerefMut for Rustc {
         &mut self.common
     }
 }
+
+#[cfg(test)]
+mod test {
+    use super::Rustc;
+    use clap::CommandFactory;
+
+    #[test]
+    fn verify_cli() {
+        <Rustc as CommandFactory>::command().debug_assert()
+    }
+}

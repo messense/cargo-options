@@ -77,3 +77,14 @@ impl DerefMut for Run {
         &mut self.common
     }
 }
+
+#[cfg(test)]
+mod test {
+    use super::Run;
+    use clap::CommandFactory;
+
+    #[test]
+    fn verify_cli() {
+        <Run as CommandFactory>::command().debug_assert()
+    }
+}

@@ -164,3 +164,14 @@ impl DerefMut for Build {
         &mut self.common
     }
 }
+
+#[cfg(test)]
+mod test {
+    use super::Build;
+    use clap::CommandFactory;
+
+    #[test]
+    fn verify_cli() {
+        <Build as CommandFactory>::command().debug_assert()
+    }
+}
