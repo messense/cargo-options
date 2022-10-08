@@ -9,67 +9,70 @@ use crate::CommonOptions;
 /// the concrete used versions including overrides,
 /// in machine-readable format
 #[derive(Clone, Debug, Default, Parser)]
-#[clap(setting = clap::AppSettings::DeriveDisplayOrder, after_help = "Run `cargo help metadata` for more detailed information.")]
+#[command(
+    display_order = 1,
+    after_help = "Run `cargo help metadata` for more detailed information."
+)]
 pub struct Metadata {
     /// Do not print cargo log messages
-    #[clap(short = 'q', long)]
+    #[arg(short = 'q', long)]
     pub quiet: bool,
 
     /// Space or comma separated list of features to activate
-    #[clap(short = 'F', long, action = ArgAction::Append)]
+    #[arg(short = 'F', long, action = ArgAction::Append)]
     pub features: Vec<String>,
 
     /// Activate all available features
-    #[clap(long)]
+    #[arg(long)]
     pub all_features: bool,
 
     /// Do not activate the `default` feature
-    #[clap(long)]
+    #[arg(long)]
     pub no_default_features: bool,
 
     /// Use verbose output (-vv very verbose/build.rs output)
-    #[clap(short = 'v', long, action = ArgAction::Count, value_parser = value_parser!(u8).range(..2))]
+    #[arg(short = 'v', long, action = ArgAction::Count, value_parser = value_parser!(u8).range(..2))]
     pub verbose: usize,
 
     /// Only include resolve dependencies matching the given target-triple
-    #[clap(long, value_name = "TRIPLE", action = ArgAction::Append)]
+    #[arg(long, value_name = "TRIPLE", action = ArgAction::Append)]
     pub filter_platform: Vec<String>,
 
     /// Output information only about the workspace members
     /// and don't fetch dependencies
-    #[clap(long)]
+    #[arg(long)]
     pub no_deps: bool,
 
     /// Path to Cargo.toml
-    #[clap(long, value_name = "PATH", value_parser)]
+    #[arg(long, value_name = "PATH")]
     pub manifest_path: Option<PathBuf>,
 
     /// Format version
-    #[clap(long, value_name = "VERSION", value_parser = ["1"])]
+    #[arg(long, value_name = "VERSION", value_parser = ["1"])]
     pub format_version: Option<String>,
 
     /// Coloring: auto, always, never
-    #[clap(long, value_name = "WHEN")]
+    #[arg(long, value_name = "WHEN")]
     pub color: Option<String>,
 
     /// Require Cargo.lock and cache are up to date
-    #[clap(long)]
+    #[arg(long)]
     pub frozen: bool,
 
     /// Require Cargo.lock is up to date
-    #[clap(long)]
+    #[arg(long)]
     pub locked: bool,
 
     /// Run without accessing the network
-    #[clap(long)]
+    #[arg(long)]
     pub offline: bool,
 
     /// Override a configuration value (unstable)
-    #[clap(long, value_name = "KEY=VALUE", action = ArgAction::Append)]
+    #[arg(long, value_name = "KEY=VALUE", action = ArgAction::Append)]
     pub config: Vec<String>,
 
     /// Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details
-    #[clap(short = 'Z', value_name = "FLAG", action = ArgAction::Append)]
+    #[arg(short = 'Z', value_name = "FLAG", action = ArgAction::Append)]
     pub unstable_flags: Vec<String>,
 }
 

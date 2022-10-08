@@ -11,7 +11,7 @@ repository = "https://github.com/messense/cargo-options"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-clap = { version = "3.1.2", features = ["derive", "env", "wrap_help"] }
+clap = { version = "4.0.0", features = ["derive", "env", "wrap_help"] }
 
 [dev-dependencies]
 trycmd = { version = "0.14.0", features = ["examples"] }

@@ -7,17 +7,16 @@ use crate::common::CommonOptions;
 
 /// Run a binary or example of the local package
 #[derive(Clone, Debug, Default, Parser)]
-#[clap(
-    setting = clap::AppSettings::DeriveDisplayOrder,
-    trailing_var_arg = true,
-    after_help = "Run `cargo help run` for more detailed information.")
-]
+#[command(
+    display_order = 1,
+    after_help = "Run `cargo help run` for more detailed information."
+)]
 pub struct Run {
-    #[clap(flatten)]
+    #[command(flatten)]
     pub common: CommonOptions,
 
     /// Package to run (see `cargo help pkgid`)
-    #[clap(
+    #[arg(
         short = 'p',
         long = "package",
         value_name = "SPEC",
@@ -26,15 +25,15 @@ pub struct Run {
     pub packages: Vec<String>,
 
     /// Run the specified binary
-    #[clap(long, value_name = "NAME", action = ArgAction::Append)]
+    #[arg(long, value_name = "NAME", action = ArgAction::Append)]
     pub bin: Vec<String>,
 
     /// Run the specified example
-    #[clap(long, value_name = "NAME", action = ArgAction::Append)]
+    #[arg(long, value_name = "NAME", action = ArgAction::Append)]
     pub example: Vec<String>,
 
     /// Arguments for the binary to run
-    #[clap(value_name = "args", takes_value = true, multiple_values = true)]
+    #[arg(value_name = "args", trailing_var_arg = true, num_args = 0..)]
     pub args: Vec<String>,
 }
 

@@ -2,20 +2,17 @@ use cargo_options::{Build, Metadata, Run, Rustc, Test};
 use clap::Parser;
 
 #[derive(Debug, Parser)]
-#[clap(
-    name = "cargo-mimic",
-    global_setting(clap::AppSettings::DeriveDisplayOrder)
-)]
+#[command(name = "cargo-mimic", display_order = 1)]
 enum Opt {
-    #[clap(name = "build", aliases = &["b"] )]
+    #[command(name = "build", aliases = &["b"] )]
     Build(Build),
-    #[clap(name = "metadata")]
+    #[command(name = "metadata")]
     Metadata(Metadata),
-    #[clap(name = "rustc")]
+    #[command(name = "rustc")]
     Rustc(Rustc),
-    #[clap(name = "run", alias = "r")]
+    #[command(name = "run", alias = "r")]
     Run(Run),
-    #[clap(name = "test", alias = "t")]
+    #[command(name = "test", alias = "t")]
     Test(Test),
 }
 

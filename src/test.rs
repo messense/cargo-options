@@ -7,17 +7,16 @@ use crate::common::CommonOptions;
 
 /// Execute all unit and integration tests and build examples of a local package
 #[derive(Clone, Debug, Default, Parser)]
-#[clap(
-    setting = clap::AppSettings::DeriveDisplayOrder,
-    trailing_var_arg = true,
-    after_help = "Run `cargo help test` for more detailed information.\nRun `cargo test -- --help` for test binary options.")
-]
+#[command(
+    display_order = 1,
+    after_help = "Run `cargo help test` for more detailed information.\nRun `cargo test -- --help` for test binary options."
+)]
 pub struct Test {
-    #[clap(flatten)]
+    #[command(flatten)]
     pub common: CommonOptions,
 
     /// Package to build (see `cargo help pkgid`)
-    #[clap(
+    #[arg(
         short = 'p',
         long = "package",
         value_name = "SPEC",
@@ -26,79 +25,79 @@ pub struct Test {
     pub packages: Vec<String>,
 
     /// Test all packages in the workspace
-    #[clap(long)]
+    #[arg(long)]
     pub workspace: bool,
 
     /// Exclude packages from the build
-    #[clap(long, value_name = "SPEC", action = ArgAction::Append)]
+    #[arg(long, value_name = "SPEC", action = ArgAction::Append)]
     pub exclude: Vec<String>,
 
     /// Alias for workspace (deprecated)
-    #[clap(long)]
+    #[arg(long)]
     pub all: bool,
 
     /// Test only this package's library
-    #[clap(long)]
+    #[arg(long)]
     pub lib: bool,
 
     /// Test only the specified binary
-    #[clap(long, value_name = "NAME", action = ArgAction::Append)]
+    #[arg(long, value_name = "NAME", action = ArgAction::Append)]
     pub bin: Vec<String>,
 
     /// Test all binaries
-    #[clap(long)]
+    #[arg(long)]
     pub bins: bool,
 
     /// Test only the specified example
-    #[clap(long, value_name = "NAME", action = ArgAction::Append)]
+    #[arg(long, value_name = "NAME", action = ArgAction::Append)]
     pub example: Vec<String>,
 
     /// Test all examples
-    #[clap(long)]
+    #[arg(long)]
     pub examples: bool,
 
     /// Test only the specified test target
-    #[clap(long, value_name = "NAME", action = ArgAction::Append)]
+    #[arg(long, value_name = "NAME", action = ArgAction::Append)]
     pub test: Vec<String>,
 
     /// Test all tests
-    #[clap(long)]
+    #[arg(long)]
     pub tests: bool,
 
     /// Test only the specified bench target
-    #[clap(long, value_name = "NAME", action = ArgAction::Append)]
+    #[arg(long, value_name = "NAME", action = ArgAction::Append)]
     pub bench: Vec<String>,
 
     /// Test all benches
-    #[clap(long)]
+    #[arg(long)]
     pub benches: bool,
 
     /// Test all targets
-    #[clap(long)]
+    #[arg(long)]
     pub all_targets: bool,
 
     /// Test only this library's documentation
-    #[clap(long)]
+    #[arg(long)]
     pub doc: bool,
 
     /// Compile, but don't run tests
-    #[clap(long)]
+    #[arg(long)]
     pub no_run: bool,
 
     /// Run all tests regardless of failure
-    #[clap(long)]
+    #[arg(long)]
     pub no_fail_fast: bool,
 
     /// Outputs a future incompatibility report at the end of the build (unstable)
-    #[clap(long)]
+    #[arg(long)]
     pub future_incompat_report: bool,
 
     /// If specified, only run tests containing this string in their names
-    #[clap(value_name = "TESTNAME", takes_value = true)]
+    #[arg(value_name = "TESTNAME")]
     pub test_name: Option<String>,
 
     /// Arguments for the test binary
-    #[clap(value_name = "args", takes_value = true, multiple_values = true)]
+    #[arg(value_name = "args", trailing_var_arg = true, num_args = 0..)]
     pub args: Vec<String>,
 }
 
