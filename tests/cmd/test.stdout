@@ -1,0 +1,57 @@
+cargo-mimic[EXE]-test 
+Execute all unit and integration tests and build examples of a local package
+
+USAGE:
+    cargo-mimic[EXE] test [OPTIONS] [--] [ARGS]
+
+ARGS:
+    <TESTNAME>    If specified, only run tests containing this string in their names
+    <args>...     Arguments for the test binary
+
+OPTIONS:
+    -q, --quiet                     Do not print cargo log messages
+    -j, --jobs <N>                  Number of parallel jobs, defaults to # of CPUs
+        --keep-going                Do not abort the build as soon as there is an error (unstable)
+    -r, --release                   Build artifacts in release mode, with optimizations
+        --profile <PROFILE-NAME>    Build artifacts with the specified Cargo profile
+    -F, --features <FEATURES>       Space or comma separated list of features to activate
+        --all-features              Activate all available features
+        --no-default-features       Do not activate the `default` feature
+        --target <TRIPLE>           Build for the target triple [env: CARGO_BUILD_TARGET=]
+        --target-dir <DIRECTORY>    Directory for all generated artifacts
+        --manifest-path <PATH>      Path to Cargo.toml
+        --ignore-rust-version       Ignore `rust-version` specification in packages
+        --message-format <FMT>      Error format
+        --unit-graph                Output build graph in JSON (unstable)
+    -v, --verbose                   Use verbose output (-vv very verbose/build.rs output)
+        --color <WHEN>              Coloring: auto, always, never
+        --frozen                    Require Cargo.lock and cache are up to date
+        --locked                    Require Cargo.lock is up to date
+        --offline                   Run without accessing the network
+        --config <KEY=VALUE>        Override a configuration value (unstable)
+    -Z <FLAG>                       Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for
+                                    details
+        --timings[=<FMTS>...]       Timing output formats (unstable) (comma separated): html, json
+    -p, --package <SPEC>            Package to build (see `cargo help pkgid`)
+        --workspace                 Test all packages in the workspace
+        --exclude <SPEC>            Exclude packages from the build
+        --all                       Alias for workspace (deprecated)
+        --lib                       Test only this package's library
+        --bin <NAME>                Test only the specified binary
+        --bins                      Test all binaries
+        --example <NAME>            Test only the specified example
+        --examples                  Test all examples
+        --test <NAME>               Test only the specified test target
+        --tests                     Test all tests
+        --bench <NAME>              Test only the specified bench target
+        --benches                   Test all benches
+        --all-targets               Test all targets
+        --doc                       Test only this library's documentation
+        --no-run                    Compile, but don't run tests
+        --no-fail-fast              Run all tests regardless of failure
+        --future-incompat-report    Outputs a future incompatibility report at the end of the build
+                                    (unstable)
+    -h, --help                      Print help information
+
+Run `cargo help test` for more detailed information.
+Run `cargo test -- --help` for test binary options.
