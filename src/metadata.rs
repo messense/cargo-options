@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 use std::process::Command;
 
-use clap::{value_parser, ArgAction, Parser};
+use clap::{ArgAction, Parser};
 
 use crate::CommonOptions;
 
@@ -31,8 +31,8 @@ pub struct Metadata {
     pub no_default_features: bool,
 
     /// Use verbose output (-vv very verbose/build.rs output)
-    #[arg(short = 'v', long, action = ArgAction::Count, value_parser = value_parser!(u8).range(..2))]
-    pub verbose: usize,
+    #[arg(short = 'v', long, action = ArgAction::Count)]
+    pub verbose: u8,
 
     /// Only include resolve dependencies matching the given target-triple
     #[arg(long, value_name = "TRIPLE", action = ArgAction::Append)]
@@ -85,7 +85,7 @@ impl Metadata {
             cmd.arg("--quiet");
         }
         if self.verbose > 0 {
-            cmd.arg(format!("-{}", "v".repeat(self.verbose)));
+            cmd.arg(format!("-{}", "v".repeat(self.verbose.into())));
         }
         for feature in &self.features {
             cmd.arg("--features").arg(feature);

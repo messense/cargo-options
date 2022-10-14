@@ -161,7 +161,7 @@ impl CommonOptions {
             cmd.arg("--unit-graph");
         }
         if self.verbose > 0 {
-            cmd.arg(format!("-{}", "v".repeat(self.verbose as usize)));
+            cmd.arg(format!("-{}", "v".repeat(self.verbose.into())));
         }
         if let Some(color) = self.color.as_ref() {
             cmd.arg("--color").arg(color);
