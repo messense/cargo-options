@@ -13,6 +13,7 @@ use crate::CommonOptions;
     display_order = 1,
     after_help = "Run `cargo help metadata` for more detailed information."
 )]
+#[group(skip)]
 pub struct Metadata {
     /// Do not print cargo log messages
     #[arg(short = 'q', long)]

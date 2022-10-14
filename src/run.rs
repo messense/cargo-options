@@ -11,6 +11,7 @@ use crate::common::CommonOptions;
     display_order = 1,
     after_help = "Run `cargo help run` for more detailed information."
 )]
+#[group(skip)]
 pub struct Run {
     #[command(flatten)]
     pub common: CommonOptions,

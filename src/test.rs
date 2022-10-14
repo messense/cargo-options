@@ -11,6 +11,7 @@ use crate::common::CommonOptions;
     display_order = 1,
     after_help = "Run `cargo help test` for more detailed information.\nRun `cargo test -- --help` for test binary options."
 )]
+#[group(skip)]
 pub struct Test {
     #[command(flatten)]
     pub common: CommonOptions,
