@@ -8,13 +8,16 @@ use crate::common::CommonOptions;
 
 /// Compile a local package and all of its dependencies
 #[derive(Clone, Debug, Default, Parser)]
-#[clap(setting = clap::AppSettings::DeriveDisplayOrder, after_help = "Run `cargo help build` for more detailed information.")]
+#[command(
+    display_order = 1,
+    after_help = "Run `cargo help build` for more detailed information."
+)]
 pub struct Build {
-    #[clap(flatten)]
+    #[command(flatten)]
     pub common: CommonOptions,
 
     /// Package to build (see `cargo help pkgid`)
-    #[clap(
+    #[arg(
         short = 'p',
         long = "package",
         value_name = "SPEC",
@@ -23,67 +26,67 @@ pub struct Build {
     pub packages: Vec<String>,
 
     /// Build all packages in the workspace
-    #[clap(long)]
+    #[arg(long)]
     pub workspace: bool,
 
     /// Exclude packages from the build
-    #[clap(long, value_name = "SPEC", action = ArgAction::Append)]
+    #[arg(long, value_name = "SPEC", action = ArgAction::Append)]
     pub exclude: Vec<String>,
 
     /// Alias for workspace (deprecated)
-    #[clap(long)]
+    #[arg(long)]
     pub all: bool,
 
     /// Build only this package's library
-    #[clap(long)]
+    #[arg(long)]
     pub lib: bool,
 
     /// Build only the specified binary
-    #[clap(long, value_name = "NAME", action = ArgAction::Append)]
+    #[arg(long, value_name = "NAME", action = ArgAction::Append)]
     pub bin: Vec<String>,
 
     /// Build all binaries
-    #[clap(long)]
+    #[arg(long)]
     pub bins: bool,
 
     /// Build only the specified example
-    #[clap(long, value_name = "NAME", action = ArgAction::Append)]
+    #[arg(long, value_name = "NAME", action = ArgAction::Append)]
     pub example: Vec<String>,
 
     /// Build all examples
-    #[clap(long)]
+    #[arg(long)]
     pub examples: bool,
 
     /// Build only the specified test target
-    #[clap(long, value_name = "NAME", action = ArgAction::Append)]
+    #[arg(long, value_name = "NAME", action = ArgAction::Append)]
     pub test: Vec<String>,
 
     /// Build all tests
-    #[clap(long)]
+    #[arg(long)]
     pub tests: bool,
 
     /// Build only the specified bench target
-    #[clap(long, value_name = "NAME", action = ArgAction::Append)]
+    #[arg(long, value_name = "NAME", action = ArgAction::Append)]
     pub bench: Vec<String>,
 
     /// Build all benches
-    #[clap(long)]
+    #[arg(long)]
     pub benches: bool,
 
     /// Build all targets
-    #[clap(long)]
+    #[arg(long)]
     pub all_targets: bool,
 
     /// Copy final artifacts to this directory (unstable)
-    #[clap(long, value_name = "PATH", value_parser)]
+    #[arg(long, value_name = "PATH")]
     pub out_dir: Option<PathBuf>,
 
     /// Output the build plan in JSON (unstable)
-    #[clap(long)]
+    #[arg(long)]
     pub build_plan: bool,
 
     /// Outputs a future incompatibility report at the end of the build (unstable)
-    #[clap(long)]
+    #[arg(long)]
     pub future_incompat_report: bool,
 }
 
