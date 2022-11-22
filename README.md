@@ -10,9 +10,8 @@ Reusable common Cargo command line options.
 
 Add it to your ``Cargo.toml``:
 
-```toml
-[dependencies]
-cargo-options = "0.5"
+```bash
+cargo add cargo-options
 ```
 
 ## License
