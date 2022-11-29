@@ -1,33 +1,24 @@
 use std::ops::{Deref, DerefMut};
 use std::process::Command;
 
-use clap::{ArgAction, Parser};
+use clap::Parser;
 
+use crate::check::CheckOptions;
 use crate::common::CommonOptions;
 
 /// Compile a local package and all of its dependencies
 #[derive(Clone, Debug, Default, Parser)]
 #[command(
     display_order = 1,
-    after_help = "Run `cargo help build` for more detailed information."
+    after_help = "Run `cargo help clippy` for more detailed information."
 )]
 #[group(skip)]
 pub struct Clippy {
     #[command(flatten)]
     pub common: CommonOptions,
 
-    /// Package to run (see `cargo help pkgid`)
-    #[arg(
-        short = 'p',
-        long = "package",
-        value_name = "SPEC",
-        action = ArgAction::Append
-    )]
-    pub packages: Vec<String>,
-
-    /// Run against all targets in project
-    #[arg(long)]
-    pub all_targets: bool,
+    #[command(flatten)]
+    pub check: CheckOptions,
 
     /// Ignore dependencies, run only on crate
     #[arg(long)]
@@ -49,13 +40,8 @@ impl Clippy {
         cmd.arg("clippy");
 
         self.common.apply(&mut cmd);
+        self.check.apply(&mut cmd);
 
-        for pkg in &self.packages {
-            cmd.arg("--package").arg(pkg);
-        }
-        if self.all_targets {
-            cmd.arg("--all-targets");
-        }
         if self.no_deps {
             cmd.arg("--no-deps");
         }

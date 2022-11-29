@@ -1,4 +1,5 @@
 mod build;
+mod check;
 mod clippy;
 mod common;
 mod metadata;
@@ -6,9 +7,10 @@ mod run;
 mod rustc;
 mod test;
 
-// Specify crate to satisfy naming overlay w/
+// Specify crate to satisfy naming overlap w/ rustc clippy
 pub use crate::clippy::Clippy;
 pub use build::Build;
+pub use check::Check;
 pub use common::CommonOptions;
 pub use metadata::Metadata;
 pub use run::Run;
