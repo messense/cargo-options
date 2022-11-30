@@ -5,7 +5,7 @@ use clap::{ArgAction, Parser};
 
 use crate::common::CommonOptions;
 
-/// `cargo check` options which are also a subset of `cargo test` and `cargo clippy`
+/// `cargo check` options which are also a subset of `cargo clippy`
 #[derive(Clone, Debug, Default, Parser)]
 pub struct CheckOptions {
     /// Package to build (see `cargo help pkgid`)
@@ -124,7 +124,7 @@ impl CheckOptions {
     }
 }
 
-/// Compile a local package and all of its dependencies
+/// Check a local package and all of its dependencies for errors
 #[derive(Clone, Debug, Default, Parser)]
 #[command(
     display_order = 1,

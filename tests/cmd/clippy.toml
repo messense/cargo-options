@@ -1,0 +1,2 @@
+bin.name = "cargo-mimic"
+args = "clippy --help"

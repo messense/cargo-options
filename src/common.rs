@@ -142,7 +142,7 @@ impl CommonOptions {
             .map(|target| target.split_once('.').map(|(t, _)| t).unwrap_or(target))
             .collect::<Vec<&str>>();
         rust_targets.iter().for_each(|target| {
-            cmd.arg("--target").arg(&target);
+            cmd.arg("--target").arg(target);
         });
 
         if let Some(dir) = self.target_dir.as_ref() {

@@ -6,7 +6,7 @@ use clap::Parser;
 use crate::check::CheckOptions;
 use crate::common::CommonOptions;
 
-/// Compile a local package and all of its dependencies
+/// Checks a package to catch common mistakes and improve your Rust code
 #[derive(Clone, Debug, Default, Parser)]
 #[command(
     display_order = 1,
