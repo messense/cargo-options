@@ -17,12 +17,29 @@ pub struct Build {
     #[command(flatten)]
     pub common: CommonOptions,
 
+    /// Path to Cargo.toml
+    #[arg(long, value_name = "PATH")]
+    pub manifest_path: Option<PathBuf>,
+
+    /// Build artifacts in release mode, with optimizations
+    #[arg(short = 'r', long)]
+    pub release: bool,
+
+    /// Ignore `rust-version` specification in packages
+    #[arg(long)]
+    pub ignore_rust_version: bool,
+
+    /// Output build graph in JSON (unstable)
+    #[arg(long)]
+    pub unit_graph: bool,
+
     /// Package to build (see `cargo help pkgid`)
     #[arg(
         short = 'p',
         long = "package",
         value_name = "SPEC",
         action = ArgAction::Append,
+        num_args=0..=1,
     )]
     pub packages: Vec<String>,
 
@@ -43,7 +60,7 @@ pub struct Build {
     pub lib: bool,
 
     /// Build only the specified binary
-    #[arg(long, value_name = "NAME", action = ArgAction::Append)]
+    #[arg(long, value_name = "NAME", action = ArgAction::Append, num_args=0..=1)]
     pub bin: Vec<String>,
 
     /// Build all binaries
@@ -51,7 +68,7 @@ pub struct Build {
     pub bins: bool,
 
     /// Build only the specified example
-    #[arg(long, value_name = "NAME", action = ArgAction::Append)]
+    #[arg(long, value_name = "NAME", action = ArgAction::Append, num_args=0..=1)]
     pub example: Vec<String>,
 
     /// Build all examples
@@ -99,6 +116,18 @@ impl Build {
 
         self.common.apply(&mut cmd);
 
+        if let Some(path) = self.manifest_path.as_ref() {
+            cmd.arg("--manifest-path").arg(path);
+        }
+        if self.release {
+            cmd.arg("--release");
+        }
+        if self.ignore_rust_version {
+            cmd.arg("--ignore-rust-version");
+        }
+        if self.unit_graph {
+            cmd.arg("--unit-graph");
+        }
         for pkg in &self.packages {
             cmd.arg("--package").arg(pkg);
         }

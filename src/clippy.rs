@@ -1,4 +1,5 @@
 use std::ops::{Deref, DerefMut};
+use std::path::PathBuf;
 use std::process::Command;
 
 use clap::Parser;
@@ -19,6 +20,22 @@ pub struct Clippy {
 
     #[command(flatten)]
     pub check: CheckOptions,
+
+    /// Path to Cargo.toml
+    #[arg(long, value_name = "PATH")]
+    pub manifest_path: Option<PathBuf>,
+
+    /// Build artifacts in release mode, with optimizations
+    #[arg(short = 'r', long)]
+    pub release: bool,
+
+    /// Ignore `rust-version` specification in packages
+    #[arg(long)]
+    pub ignore_rust_version: bool,
+
+    /// Output build graph in JSON (unstable)
+    #[arg(long)]
+    pub unit_graph: bool,
 
     /// Ignore dependencies, run only on crate
     #[arg(long)]
@@ -42,6 +59,18 @@ impl Clippy {
         self.common.apply(&mut cmd);
         self.check.apply(&mut cmd);
 
+        if let Some(path) = self.manifest_path.as_ref() {
+            cmd.arg("--manifest-path").arg(path);
+        }
+        if self.release {
+            cmd.arg("--release");
+        }
+        if self.ignore_rust_version {
+            cmd.arg("--ignore-rust-version");
+        }
+        if self.unit_graph {
+            cmd.arg("--unit-graph");
+        }
         if self.no_deps {
             cmd.arg("--no-deps");
         }

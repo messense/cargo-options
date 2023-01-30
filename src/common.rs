@@ -18,10 +18,6 @@ pub struct CommonOptions {
     #[arg(long)]
     pub keep_going: bool,
 
-    /// Build artifacts in release mode, with optimizations
-    #[arg(short = 'r', long)]
-    pub release: bool,
-
     /// Build artifacts with the specified Cargo profile
     #[arg(long, value_name = "PROFILE-NAME")]
     pub profile: Option<String>,
@@ -51,21 +47,9 @@ pub struct CommonOptions {
     #[arg(long, value_name = "DIRECTORY")]
     pub target_dir: Option<PathBuf>,
 
-    /// Path to Cargo.toml
-    #[arg(long, value_name = "PATH")]
-    pub manifest_path: Option<PathBuf>,
-
-    /// Ignore `rust-version` specification in packages
-    #[arg(long)]
-    pub ignore_rust_version: bool,
-
     /// Error format
     #[arg(long, value_name = "FMT", action = ArgAction::Append)]
     pub message_format: Vec<String>,
-
-    /// Output build graph in JSON (unstable)
-    #[arg(long)]
-    pub unit_graph: bool,
 
     /// Use verbose output (-vv very verbose/build.rs output)
     #[arg(short = 'v', long, action = ArgAction::Count)]
@@ -118,9 +102,6 @@ impl CommonOptions {
         if self.keep_going {
             cmd.arg("--keep-going");
         }
-        if self.release {
-            cmd.arg("--release");
-        }
         if let Some(profile) = self.profile.as_ref() {
             cmd.arg("--profile").arg(profile);
         }
@@ -148,17 +129,8 @@ impl CommonOptions {
         if let Some(dir) = self.target_dir.as_ref() {
             cmd.arg("--target-dir").arg(dir);
         }
-        if let Some(path) = self.manifest_path.as_ref() {
-            cmd.arg("--manifest-path").arg(path);
-        }
-        if self.ignore_rust_version {
-            cmd.arg("--ignore-rust-version");
-        }
         for fmt in &self.message_format {
             cmd.arg("--message-format").arg(fmt);
-        }
-        if self.unit_graph {
-            cmd.arg("--unit-graph");
         }
         if self.verbose > 0 {
             cmd.arg(format!("-{}", "v".repeat(self.verbose.into())));
