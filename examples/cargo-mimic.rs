@@ -1,4 +1,4 @@
-use cargo_options::{Build, Check, Clippy, Metadata, Run, Rustc, Test};
+use cargo_options::{Build, Check, Clippy, Install, Metadata, Run, Rustc, Test};
 use clap::Parser;
 
 #[derive(Debug, Parser)]
@@ -10,6 +10,8 @@ enum Opt {
     Clippy(Clippy),
     #[command(name = "check", aliases = &["c"])]
     Check(Check),
+    #[command(name = "install")]
+    Install(Install),
     #[command(name = "metadata")]
     Metadata(Metadata),
     #[command(name = "rustc")]

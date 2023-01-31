@@ -21,6 +21,6 @@ Options:
       --config <KEY=VALUE>        Override a configuration value (unstable)
   -Z <FLAG>                       Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for
                                   details
-  -h, --help                      Print help information
+  -h, --help                      Print help
 
 Run `cargo help metadata` for more detailed information.

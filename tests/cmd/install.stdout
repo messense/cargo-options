@@ -1,6 +1,9 @@
-Check a local package and all of its dependencies for errors
+Install a Rust binary. Default location is $HOME/.cargo/bin
 
-Usage: cargo-mimic[EXE] check [OPTIONS]
+Usage: cargo-mimic[EXE] install [OPTIONS] [crate]...
+
+Arguments:
+  [crate]...  
 
 Options:
   -q, --quiet                   Do not print cargo log messages
@@ -22,26 +25,23 @@ Options:
   -Z <FLAG>                     Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for
                                 details
       --timings[=<FMTS>...]     Timing output formats (unstable) (comma separated): html, json
-  -p, --package [<SPEC>]        Package to build (see `cargo help pkgid`)
-      --workspace               Check all packages in the workspace
-      --exclude <SPEC>          Exclude packages from the build
-      --all                     Alias for workspace (deprecated)
-      --lib                     Check only this package's library
-      --bin [<NAME>]            Check only the specified binary
-      --bins                    Check all binaries
-      --example [<NAME>]        Check only the specified example
-      --examples                Check all examples
-      --test <NAME>             Check only the specified test target
-      --tests                   Check all tests
-      --bench <NAME>            Check only the specified bench target
-      --benches                 Check all benches
-      --all-targets             Check all targets
-      --future-incompat-report  Outputs a future incompatibility report at the end of the build
-                                (unstable)
-      --manifest-path <PATH>    Path to Cargo.toml
-  -r, --release                 Build artifacts in release mode, with optimizations
-      --ignore-rust-version     Ignore `rust-version` specification in packages
-      --unit-graph              Output build graph in JSON (unstable)
+      --version <VERSION>       Specify a version to install
+      --git <URL>               Git URL to install the specified crate from
+      --branch <BRANCH>         Branch to use when installing from git
+      --tag <TAG>               Tag to use when installing from git
+      --rev <SHA>               Specific commit to use when installing from git
+      --path <PATH>             Filesystem path to local crate to install
+      --list                    list all installed packages and their versions
+  -f, --force                   Force overwriting existing crates or binaries
+      --no-track                Do not save tracking information
+      --debug                   Build in debug mode (with the 'dev' profile) instead of release mode
+      --root <DIR>              Directory to install packages into
+      --index <INDEX>           Registry index to install from
+      --registry <REGISTRY>     Registry to use
+      --bin [<NAME>]            Install only the specified binary
+      --bins                    Install all binaries
+      --example [<NAME>]        Install only the specified example
+      --examples                Install all examples
   -h, --help                    Print help
 
-Run `cargo help check` for more detailed information.
+Run `cargo help install` for more detailed information.
