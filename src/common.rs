@@ -1,6 +1,7 @@
 use std::path::PathBuf;
 use std::process::Command;
 
+use crate::heading;
 use clap::{ArgAction, Parser};
 
 /// common cargo options
@@ -11,27 +12,41 @@ pub struct CommonOptions {
     pub quiet: bool,
 
     /// Number of parallel jobs, defaults to # of CPUs
-    #[arg(short = 'j', long, value_name = "N")]
+    #[arg(
+        short = 'j',
+        long,
+        value_name = "N",
+        help_heading = heading::COMPILATION_OPTIONS,
+    )]
     pub jobs: Option<usize>,
 
     /// Do not abort the build as soon as there is an error (unstable)
-    #[arg(long)]
+    #[arg(long, help_heading = heading::COMPILATION_OPTIONS)]
     pub keep_going: bool,
 
     /// Build artifacts with the specified Cargo profile
-    #[arg(long, value_name = "PROFILE-NAME")]
+    #[arg(
+        long,
+        value_name = "PROFILE-NAME",
+        help_heading = heading::COMPILATION_OPTIONS,
+    )]
     pub profile: Option<String>,
 
     /// Space or comma separated list of features to activate
-    #[arg(short = 'F', long, action = ArgAction::Append)]
+    #[arg(
+        short = 'F',
+        long,
+        action = ArgAction::Append,
+        help_heading = heading::FEATURE_SELECTION,
+    )]
     pub features: Vec<String>,
 
     /// Activate all available features
-    #[arg(long)]
+    #[arg(long, help_heading = heading::FEATURE_SELECTION)]
     pub all_features: bool,
 
     /// Do not activate the `default` feature
-    #[arg(long)]
+    #[arg(long, help_heading = heading::FEATURE_SELECTION)]
     pub no_default_features: bool,
 
     /// Build for the target triple
@@ -39,12 +54,17 @@ pub struct CommonOptions {
         long,
         value_name = "TRIPLE",
         env = "CARGO_BUILD_TARGET",
-        action = ArgAction::Append
+        action = ArgAction::Append,
+        help_heading = heading::COMPILATION_OPTIONS,
     )]
     pub target: Vec<String>,
 
     /// Directory for all generated artifacts
-    #[arg(long, value_name = "DIRECTORY")]
+    #[arg(
+        long,
+        value_name = "DIRECTORY",
+        help_heading = heading::COMPILATION_OPTIONS,
+    )]
     pub target_dir: Option<PathBuf>,
 
     /// Error format
@@ -60,15 +80,15 @@ pub struct CommonOptions {
     pub color: Option<String>,
 
     /// Require Cargo.lock and cache are up to date
-    #[arg(long)]
+    #[arg(long, help_heading = heading::MANIFEST_OPTIONS)]
     pub frozen: bool,
 
     /// Require Cargo.lock is up to date
-    #[arg(long)]
+    #[arg(long, help_heading = heading::MANIFEST_OPTIONS)]
     pub locked: bool,
 
     /// Run without accessing the network
-    #[arg(long)]
+    #[arg(long, help_heading = heading::MANIFEST_OPTIONS)]
     pub offline: bool,
 
     /// Override a configuration value (unstable)
@@ -85,7 +105,8 @@ pub struct CommonOptions {
         value_name = "FMTS",
         num_args = 0..,
         value_delimiter = ',',
-        require_equals = true
+        require_equals = true,
+        help_heading = heading::COMPILATION_OPTIONS,
     )]
     pub timings: Option<Vec<String>>,
 }

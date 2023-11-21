@@ -5,12 +5,14 @@ use std::process::Command;
 use clap::{ArgAction, Parser};
 
 use crate::common::CommonOptions;
+use crate::heading;
 
 /// Install a Rust binary. Default location is $HOME/.cargo/bin
 #[derive(Clone, Debug, Default, Parser)]
 #[command(
     display_order = 1,
-    after_help = "Run `cargo help install` for more detailed information."
+    after_help = "Run `cargo help install` for more detailed information.",
+    styles = crate::style::STYLES,
 )]
 #[group(skip)]
 pub struct Install {
@@ -62,27 +64,49 @@ pub struct Install {
     pub root: Option<PathBuf>,
 
     /// Registry index to install from
-    #[arg(long, value_name = "INDEX", conflicts_with_all = ["git", "path", "registry"], requires = "crates")]
+    #[arg(
+        long,
+        value_name = "INDEX",
+        conflicts_with_all = ["git", "path", "registry"],
+        requires = "crates",
+    )]
     pub index: Option<String>,
 
     /// Registry to use
-    #[arg(long, value_name = "REGISTRY", conflicts_with_all = ["git", "path", "index"], requires = "crates")]
+    #[arg(
+        long,
+        value_name = "REGISTRY",
+        conflicts_with_all = ["git", "path", "index"],
+        requires = "crates",
+    )]
     pub registry: Option<String>,
 
     /// Install only the specified binary
-    #[arg(long, value_name = "NAME", action = ArgAction::Append, num_args=0..=1)]
+    #[arg(
+        long,
+        value_name = "NAME",
+        action = ArgAction::Append,
+        num_args=0..=1,
+        help_heading = heading::TARGET_SELECTION,
+    )]
     pub bin: Vec<String>,
 
     /// Install all binaries
-    #[arg(long)]
+    #[arg(long, help_heading = heading::TARGET_SELECTION)]
     pub bins: bool,
 
     /// Install only the specified example
-    #[arg(long, value_name = "NAME", action = ArgAction::Append, num_args=0..=1)]
+    #[arg(
+        long,
+        value_name = "NAME",
+        action = ArgAction::Append,
+        num_args=0..=1,
+        help_heading = heading::TARGET_SELECTION,
+    )]
     pub example: Vec<String>,
 
     /// Install all examples
-    #[arg(long)]
+    #[arg(long, help_heading = heading::TARGET_SELECTION)]
     pub examples: bool,
 
     #[arg(value_name = "crate", action = ArgAction::Append, num_args = 0..)]

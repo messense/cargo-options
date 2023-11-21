@@ -7,46 +7,56 @@ Arguments:
 
 Options:
   -q, --quiet                   Do not print cargo log messages
-  -j, --jobs <N>                Number of parallel jobs, defaults to # of CPUs
-      --keep-going              Do not abort the build as soon as there is an error (unstable)
-      --profile <PROFILE-NAME>  Build artifacts with the specified Cargo profile
-  -F, --features <FEATURES>     Space or comma separated list of features to activate
-      --all-features            Activate all available features
-      --no-default-features     Do not activate the `default` feature
-      --target <TRIPLE>         Build for the target triple [env: CARGO_BUILD_TARGET=]
-      --target-dir <DIRECTORY>  Directory for all generated artifacts
       --message-format <FMT>    Error format
   -v, --verbose...              Use verbose output (-vv very verbose/build.rs output)
       --color <WHEN>            Coloring: auto, always, never
-      --frozen                  Require Cargo.lock and cache are up to date
-      --locked                  Require Cargo.lock is up to date
-      --offline                 Run without accessing the network
       --config <KEY=VALUE>      Override a configuration value (unstable)
   -Z <FLAG>                     Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for
                                 details
-      --timings[=<FMTS>...]     Timing output formats (unstable) (comma separated): html, json
-  -p, --package [<SPEC>]        Package to build (see `cargo help pkgid`)
-      --workspace               Check all packages in the workspace
-      --exclude <SPEC>          Exclude packages from the build
-      --all                     Alias for workspace (deprecated)
-      --lib                     Check only this package's library
-      --bin [<NAME>]            Check only the specified binary
-      --bins                    Check all binaries
-      --example [<NAME>]        Check only the specified example
-      --examples                Check all examples
-      --test <NAME>             Check only the specified test target
-      --tests                   Check all tests
-      --bench <NAME>            Check only the specified bench target
-      --benches                 Check all benches
-      --all-targets             Check all targets
       --future-incompat-report  Outputs a future incompatibility report at the end of the build
                                 (unstable)
-      --manifest-path <PATH>    Path to Cargo.toml
-  -r, --release                 Build artifacts in release mode, with optimizations
       --ignore-rust-version     Ignore `rust-version` specification in packages
-      --unit-graph              Output build graph in JSON (unstable)
       --no-deps                 Ignore dependencies, run only on crate
       --fix                     Automatically apply lint suggestions (see `cargo help clippy`)
   -h, --help                    Print help
+
+Compilation Options:
+  -j, --jobs <N>                Number of parallel jobs, defaults to # of CPUs
+      --keep-going              Do not abort the build as soon as there is an error (unstable)
+      --profile <PROFILE-NAME>  Build artifacts with the specified Cargo profile
+      --target <TRIPLE>         Build for the target triple [env: CARGO_BUILD_TARGET=]
+      --target-dir <DIRECTORY>  Directory for all generated artifacts
+      --timings[=<FMTS>...]     Timing output formats (unstable) (comma separated): html, json
+  -r, --release                 Build artifacts in release mode, with optimizations
+      --unit-graph              Output build graph in JSON (unstable)
+
+Feature Selection:
+  -F, --features <FEATURES>  Space or comma separated list of features to activate
+      --all-features         Activate all available features
+      --no-default-features  Do not activate the `default` feature
+
+Manifest Options:
+      --frozen                Require Cargo.lock and cache are up to date
+      --locked                Require Cargo.lock is up to date
+      --offline               Run without accessing the network
+      --manifest-path <PATH>  Path to Cargo.toml
+
+Package Selection:
+  -p, --package [<SPEC>]  Package to build (see `cargo help pkgid`)
+      --workspace         Check all packages in the workspace
+      --exclude <SPEC>    Exclude packages from the build
+      --all               Alias for workspace (deprecated)
+
+Target Selection:
+      --lib               Check only this package's library
+      --bin [<NAME>]      Check only the specified binary
+      --bins              Check all binaries
+      --example [<NAME>]  Check only the specified example
+      --examples          Check all examples
+      --test <NAME>       Check only the specified test target
+      --tests             Check all tests
+      --bench <NAME>      Check only the specified bench target
+      --benches           Check all benches
+      --all-targets       Check all targets
 
 Run `cargo help clippy` for more detailed information.

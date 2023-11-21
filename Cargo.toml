@@ -11,6 +11,7 @@ repository = "https://github.com/messense/cargo-options"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+anstyle = "1.0.2"
 clap = { version = "4.0.0", features = ["derive", "env", "wrap_help"] }
 
 [dev-dependencies]

@@ -2,7 +2,11 @@ use cargo_options::{Build, Check, Clippy, Install, Metadata, Run, Rustc, Test};
 use clap::Parser;
 
 #[derive(Debug, Parser)]
-#[command(name = "cargo-mimic", display_order = 1)]
+#[command(
+    name = "cargo-mimic",
+    display_order = 1,
+    styles = cargo_options::style::STYLES,
+)]
 enum Opt {
     #[command(name = "build", aliases = &["b"] )]
     Build(Build),
