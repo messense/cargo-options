@@ -13,7 +13,7 @@ use crate::heading;
 #[command(
     display_order = 1,
     after_help = "Run `cargo help clippy` for more detailed information.",
-    styles = crate::style::STYLES,
+    styles = crate::styles(),
 )]
 #[group(skip)]
 pub struct Clippy {

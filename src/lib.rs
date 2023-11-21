@@ -16,31 +16,17 @@ pub mod heading {
     pub const MANIFEST_OPTIONS: &str = "Manifest Options";
 }
 
-pub mod style {
-    use anstyle::*;
+pub fn styles() -> clap::builder::Styles {
+    use anstyle::{AnsiColor, Effects};
 
-    pub const NOP: Style = Style::new();
-    pub const HEADER: Style = AnsiColor::Green.on_default().effects(Effects::BOLD);
-    pub const USAGE: Style = AnsiColor::Green.on_default().effects(Effects::BOLD);
-    pub const LITERAL: Style = AnsiColor::Cyan.on_default().effects(Effects::BOLD);
-    pub const PLACEHOLDER: Style = AnsiColor::Cyan.on_default();
-    pub const ERROR: Style = AnsiColor::Red.on_default().effects(Effects::BOLD);
-    pub const WARN: Style = AnsiColor::Yellow.on_default().effects(Effects::BOLD);
-    pub const NOTE: Style = AnsiColor::Cyan.on_default().effects(Effects::BOLD);
-    pub const GOOD: Style = AnsiColor::Green.on_default().effects(Effects::BOLD);
-    pub const VALID: Style = AnsiColor::Cyan.on_default().effects(Effects::BOLD);
-    pub const INVALID: Style = AnsiColor::Yellow.on_default().effects(Effects::BOLD);
-
-    pub const STYLES: clap::builder::Styles = {
-        clap::builder::styling::Styles::styled()
-            .header(HEADER)
-            .usage(USAGE)
-            .literal(LITERAL)
-            .placeholder(PLACEHOLDER)
-            .error(ERROR)
-            .valid(VALID)
-            .invalid(INVALID)
-    };
+    clap::builder::styling::Styles::styled()
+        .header(AnsiColor::Green.on_default().effects(Effects::BOLD))
+        .usage(AnsiColor::Green.on_default().effects(Effects::BOLD))
+        .literal(AnsiColor::Cyan.on_default().effects(Effects::BOLD))
+        .placeholder(AnsiColor::Cyan.on_default())
+        .error(AnsiColor::Red.on_default().effects(Effects::BOLD))
+        .valid(AnsiColor::Cyan.on_default().effects(Effects::BOLD))
+        .invalid(AnsiColor::Yellow.on_default().effects(Effects::BOLD))
 }
 
 // Specify crate to satisfy naming overlap w/ rustc clippy

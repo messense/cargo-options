@@ -12,7 +12,7 @@ use crate::heading;
 #[command(
     display_order = 1,
     after_help = "Run `cargo help test` for more detailed information.\nRun `cargo test -- --help` for test binary options.",
-    styles = crate::style::STYLES,
+    styles = crate::styles(),
 )]
 #[group(skip)]
 pub struct Test {

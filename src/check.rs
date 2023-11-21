@@ -160,7 +160,7 @@ impl CheckOptions {
 #[command(
     display_order = 1,
     after_help = "Run `cargo help check` for more detailed information.",
-    styles = crate::style::STYLES,
+    styles = crate::styles(),
 )]
 #[group(skip)]
 pub struct Check {

@@ -5,7 +5,7 @@ use clap::Parser;
 #[command(
     name = "cargo-mimic",
     display_order = 1,
-    styles = cargo_options::style::STYLES,
+    styles = cargo_options::styles(),
 )]
 enum Opt {
     #[command(name = "build", aliases = &["b"] )]
