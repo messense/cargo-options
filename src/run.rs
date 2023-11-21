@@ -5,12 +5,14 @@ use std::process::Command;
 use clap::{ArgAction, Parser};
 
 use crate::common::CommonOptions;
+use crate::heading;
 
 /// Run a binary or example of the local package
 #[derive(Clone, Debug, Default, Parser)]
 #[command(
     display_order = 1,
-    after_help = "Run `cargo help run` for more detailed information."
+    after_help = "Run `cargo help run` for more detailed information.",
+    styles = crate::style::STYLES,
 )]
 #[group(skip)]
 pub struct Run {
@@ -18,11 +20,11 @@ pub struct Run {
     pub common: CommonOptions,
 
     /// Path to Cargo.toml
-    #[arg(long, value_name = "PATH")]
+    #[arg(long, value_name = "PATH", help_heading = heading::MANIFEST_OPTIONS)]
     pub manifest_path: Option<PathBuf>,
 
     /// Build artifacts in release mode, with optimizations
-    #[arg(short = 'r', long)]
+    #[arg(short = 'r', long, help_heading = heading::COMPILATION_OPTIONS)]
     pub release: bool,
 
     /// Ignore `rust-version` specification in packages
@@ -30,7 +32,7 @@ pub struct Run {
     pub ignore_rust_version: bool,
 
     /// Output build graph in JSON (unstable)
-    #[arg(long)]
+    #[arg(long, help_heading = heading::COMPILATION_OPTIONS)]
     pub unit_graph: bool,
 
     /// Package to run (see `cargo help pkgid`)
@@ -40,15 +42,28 @@ pub struct Run {
         value_name = "SPEC",
         action = ArgAction::Append,
         num_args=0..=1,
+        help_heading = heading::PACKAGE_SELECTION,
     )]
     pub packages: Vec<String>,
 
     /// Run the specified binary
-    #[arg(long, value_name = "NAME", action = ArgAction::Append, num_args=0..=1)]
+    #[arg(
+        long,
+        value_name = "NAME",
+        action = ArgAction::Append,
+        num_args=0..=1,
+        help_heading = heading::TARGET_SELECTION,
+    )]
     pub bin: Vec<String>,
 
     /// Run the specified example
-    #[arg(long, value_name = "NAME", action = ArgAction::Append, num_args=0..=1)]
+    #[arg(
+        long,
+        value_name = "NAME",
+        action = ArgAction::Append,
+        num_args=0..=1,
+        help_heading = heading::TARGET_SELECTION,
+    )]
     pub example: Vec<String>,
 
     /// Arguments for the binary to run

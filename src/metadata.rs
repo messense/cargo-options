@@ -3,6 +3,7 @@ use std::process::Command;
 
 use clap::{ArgAction, Parser};
 
+use crate::heading;
 use crate::CommonOptions;
 
 /// Output the resolved dependencies of a package,
@@ -11,7 +12,8 @@ use crate::CommonOptions;
 #[derive(Clone, Debug, Default, Parser)]
 #[command(
     display_order = 1,
-    after_help = "Run `cargo help metadata` for more detailed information."
+    after_help = "Run `cargo help metadata` for more detailed information.",
+    styles = crate::style::STYLES,
 )]
 #[group(skip)]
 pub struct Metadata {
@@ -20,15 +22,20 @@ pub struct Metadata {
     pub quiet: bool,
 
     /// Space or comma separated list of features to activate
-    #[arg(short = 'F', long, action = ArgAction::Append)]
+    #[arg(
+        short = 'F',
+        long,
+        action = ArgAction::Append,
+        help_heading = heading::FEATURE_SELECTION,
+    )]
     pub features: Vec<String>,
 
     /// Activate all available features
-    #[arg(long)]
+    #[arg(long, help_heading = heading::FEATURE_SELECTION)]
     pub all_features: bool,
 
     /// Do not activate the `default` feature
-    #[arg(long)]
+    #[arg(long, help_heading = heading::FEATURE_SELECTION)]
     pub no_default_features: bool,
 
     /// Use verbose output (-vv very verbose/build.rs output)
@@ -57,15 +64,15 @@ pub struct Metadata {
     pub color: Option<String>,
 
     /// Require Cargo.lock and cache are up to date
-    #[arg(long)]
+    #[arg(long, help_heading = heading::MANIFEST_OPTIONS)]
     pub frozen: bool,
 
     /// Require Cargo.lock is up to date
-    #[arg(long)]
+    #[arg(long, help_heading = heading::MANIFEST_OPTIONS)]
     pub locked: bool,
 
     /// Run without accessing the network
-    #[arg(long)]
+    #[arg(long, help_heading = heading::MANIFEST_OPTIONS)]
     pub offline: bool,
 
     /// Override a configuration value (unstable)

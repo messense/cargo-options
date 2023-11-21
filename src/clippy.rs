@@ -6,12 +6,14 @@ use clap::Parser;
 
 use crate::check::CheckOptions;
 use crate::common::CommonOptions;
+use crate::heading;
 
 /// Checks a package to catch common mistakes and improve your Rust code
 #[derive(Clone, Debug, Default, Parser)]
 #[command(
     display_order = 1,
-    after_help = "Run `cargo help clippy` for more detailed information."
+    after_help = "Run `cargo help clippy` for more detailed information.",
+    styles = crate::style::STYLES,
 )]
 #[group(skip)]
 pub struct Clippy {
@@ -22,11 +24,11 @@ pub struct Clippy {
     pub check: CheckOptions,
 
     /// Path to Cargo.toml
-    #[arg(long, value_name = "PATH")]
+    #[arg(long, value_name = "PATH", help_heading = heading::MANIFEST_OPTIONS)]
     pub manifest_path: Option<PathBuf>,
 
     /// Build artifacts in release mode, with optimizations
-    #[arg(short = 'r', long)]
+    #[arg(short = 'r', long, help_heading = heading::COMPILATION_OPTIONS)]
     pub release: bool,
 
     /// Ignore `rust-version` specification in packages
@@ -34,7 +36,7 @@ pub struct Clippy {
     pub ignore_rust_version: bool,
 
     /// Output build graph in JSON (unstable)
-    #[arg(long)]
+    #[arg(long, help_heading = heading::COMPILATION_OPTIONS)]
     pub unit_graph: bool,
 
     /// Ignore dependencies, run only on crate
