@@ -1,7 +1,7 @@
 [package]
 name = "cargo-options"
-version = "0.6.0"
-edition = "2018"
+version = "0.7.0"
+edition = "2021"
 description = "Reusable common Cargo command line options"
 license = "MIT"
 keywords = ["clap", "cargo", "cli"]
