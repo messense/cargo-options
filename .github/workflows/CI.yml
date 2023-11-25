@@ -43,8 +43,13 @@ jobs:
       - name: Cache cargo build
         uses: Swatinem/rust-cache@v1
       - uses: actions-rs/cargo@v1
+        if: matrix.rust != '1.67.0'
         with:
           command: test
+      - uses: actions-rs/cargo@v1
+        if: matrix.rust == '1.67.0'
+        with:
+          command: build
 
   fmt:
     name: Rustfmt
