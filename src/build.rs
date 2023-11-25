@@ -11,8 +11,7 @@ use crate::heading;
 #[derive(Clone, Debug, Default, Parser)]
 #[command(
     display_order = 1,
-    after_help = "Run `cargo help build` for more detailed information.",
-    styles = crate::styles(),
+    after_help = "Run `cargo help build` for more detailed information."
 )]
 #[group(skip)]
 pub struct Build {
