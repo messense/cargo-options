@@ -12,7 +12,7 @@ repository = "https://github.com/messense/cargo-options"
 
 [dependencies]
 anstyle = "1.0.2"
-clap = { version = "4.0.0", features = ["derive", "env", "wrap_help"] }
+clap = { version = "4.0.0", features = ["derive", "env", "wrap_help", "unstable-styles"] }
 
 [dev-dependencies]
 trycmd = { version = "0.14.0", features = ["examples"] }
