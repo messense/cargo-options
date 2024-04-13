@@ -187,7 +187,7 @@ impl Rustc {
             cmd.arg("--future-incompat-report");
         }
         if !self.args.is_empty() {
-            cmd.arg("--").args(&self.args);
+            cmd.args(&self.args);
         }
 
         cmd

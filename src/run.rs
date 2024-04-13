@@ -100,7 +100,6 @@ impl Run {
             cmd.arg("--example").arg(example);
         }
         if !self.args.is_empty() {
-            cmd.arg("--");
             cmd.args(&self.args);
         }
 

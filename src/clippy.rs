@@ -79,7 +79,6 @@ impl Clippy {
             cmd.arg("--fix");
         }
         if !self.args.is_empty() {
-            cmd.arg("--");
             cmd.args(&self.args);
         }
 

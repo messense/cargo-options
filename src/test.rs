@@ -227,7 +227,6 @@ impl Test {
             cmd.arg(test_name);
         }
         if !self.args.is_empty() {
-            cmd.arg("--");
             cmd.args(&self.args);
         }
 
