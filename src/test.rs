@@ -223,13 +223,11 @@ impl Test {
         if self.future_incompat_report {
             cmd.arg("--future-incompat-report");
         }
+        cmd.arg("--");
         if let Some(test_name) = self.test_name.as_ref() {
             cmd.arg(test_name);
         }
-        if !self.args.is_empty() {
-            cmd.arg("--");
-            cmd.args(&self.args);
-        }
+        cmd.args(&self.args);
 
         cmd
     }
