@@ -24,7 +24,7 @@ Compilation Options:
       --timings[=<FMTS>...]     Timing output formats (unstable) (comma separated): html, json
   -r, --release                 Build artifacts in release mode, with optimizations
       --unit-graph              Output build graph in JSON (unstable)
-      --out-dir <PATH>          Copy final artifacts to this directory (unstable)
+      --artifact-dir <PATH>     Copy final artifacts to this directory (unstable)
       --build-plan              Output the build plan in JSON (unstable)
 
 Feature Selection:

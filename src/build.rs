@@ -125,8 +125,8 @@ pub struct Build {
     pub all_targets: bool,
 
     /// Copy final artifacts to this directory (unstable)
-    #[arg(long, value_name = "PATH", help_heading = heading::COMPILATION_OPTIONS)]
-    pub out_dir: Option<PathBuf>,
+    #[arg(long, alias = "out-dir", value_name = "PATH", help_heading = heading::COMPILATION_OPTIONS)]
+    pub artifact_dir: Option<PathBuf>,
 
     /// Output the build plan in JSON (unstable)
     #[arg(long, help_heading = heading::COMPILATION_OPTIONS)]
@@ -199,8 +199,8 @@ impl Build {
         if self.all_targets {
             cmd.arg("--all-targets");
         }
-        if let Some(dir) = self.out_dir.as_ref() {
-            cmd.arg("--out-dir").arg(dir);
+        if let Some(dir) = self.artifact_dir.as_ref() {
+            cmd.arg("--artifact-dir").arg(dir);
         }
         if self.build_plan {
             cmd.arg("--build-plan");
