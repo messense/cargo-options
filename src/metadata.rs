@@ -3,6 +3,9 @@ use std::process::Command;
 
 use clap::{ArgAction, Parser};
 
+#[cfg(feature = "serializable")]
+use serde::{Deserialize, Serialize};
+
 use crate::heading;
 use crate::CommonOptions;
 
@@ -15,6 +18,7 @@ use crate::CommonOptions;
     after_help = "Run `cargo help metadata` for more detailed information."
 )]
 #[group(skip)]
+#[cfg_attr(feature = "serializable", derive(Deserialize, Serialize))]
 pub struct Metadata {
     /// Do not print cargo log messages
     #[arg(short = 'q', long)]

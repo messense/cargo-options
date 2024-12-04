@@ -4,11 +4,15 @@ use std::process::Command;
 
 use clap::{ArgAction, Parser};
 
+#[cfg(feature = "serializable")]
+use serde::{Deserialize, Serialize};
+
 use crate::common::CommonOptions;
 use crate::heading;
 
 /// `cargo check` options which are also a subset of `cargo clippy`
 #[derive(Clone, Debug, Default, Parser)]
+#[cfg_attr(feature = "serializable", derive(Deserialize, Serialize))]
 pub struct CheckOptions {
     /// Package to build (see `cargo help pkgid`)
     #[arg(

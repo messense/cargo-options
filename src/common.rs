@@ -1,11 +1,15 @@
 use std::path::PathBuf;
 use std::process::Command;
 
+#[cfg(feature = "serializable")]
+use serde::{Deserialize, Serialize};
+
 use crate::heading;
 use clap::{ArgAction, Parser};
 
 /// common cargo options
 #[derive(Clone, Debug, Default, Parser)]
+#[cfg_attr(feature = "serializable", derive(Deserialize, Serialize))]
 pub struct CommonOptions {
     /// Do not print cargo log messages
     #[arg(short = 'q', long)]

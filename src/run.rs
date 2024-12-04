@@ -4,6 +4,9 @@ use std::process::Command;
 
 use clap::{ArgAction, Parser};
 
+#[cfg(feature = "serializable")]
+use serde::{Deserialize, Serialize};
+
 use crate::common::CommonOptions;
 use crate::heading;
 
@@ -14,6 +17,7 @@ use crate::heading;
     after_help = "Run `cargo help run` for more detailed information."
 )]
 #[group(skip)]
+#[cfg_attr(feature = "serializable", derive(Deserialize, Serialize))]
 pub struct Run {
     #[command(flatten)]
     pub common: CommonOptions,
