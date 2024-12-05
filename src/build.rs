@@ -4,7 +4,7 @@ use std::process::Command;
 
 use clap::{ArgAction, Parser};
 
-#[cfg(feature = "serializable")]
+#[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
 use crate::common::CommonOptions;
@@ -17,7 +17,7 @@ use crate::heading;
     after_help = "Run `cargo help build` for more detailed information."
 )]
 #[group(skip)]
-#[cfg_attr(feature = "serializable", derive(Deserialize, Serialize))]
+#[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
 pub struct Build {
     #[command(flatten)]
     pub common: CommonOptions,

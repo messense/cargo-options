@@ -4,7 +4,7 @@ use std::process::Command;
 
 use clap::{ArgAction, Parser};
 
-#[cfg(feature = "serializable")]
+#[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
 use crate::common::CommonOptions;
@@ -12,7 +12,7 @@ use crate::heading;
 
 /// `cargo doc` options
 #[derive(Clone, Debug, Default, Parser)]
-#[cfg_attr(feature = "serializable", derive(Deserialize, Serialize))]
+#[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
 pub struct DocOptions {
     /// Package to document
     #[arg(
