@@ -24,16 +24,16 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        rust: [stable, '1.67.0']
+        rust: [stable, '1.74.0']
     steps:
       - uses: actions/checkout@v4
       - run: rustup override set ${{ matrix.rust }}
       - name: Cache cargo build
         uses: Swatinem/rust-cache@v2
       - run: cargo test
-        if: matrix.rust != '1.67.0'
+        if: matrix.rust != '1.74.0'
       - run: cargo build
-        if: matrix.rust == '1.67.0'
+        if: matrix.rust == '1.74.0'
 
   fmt:
     name: Rustfmt
