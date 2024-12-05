@@ -4,6 +4,9 @@ use std::process::Command;
 
 use clap::{ArgAction, Parser};
 
+#[cfg(feature = "serde")]
+use serde::{Deserialize, Serialize};
+
 use crate::common::CommonOptions;
 use crate::heading;
 
@@ -14,24 +17,30 @@ use crate::heading;
     after_help = "Run `cargo help build` for more detailed information."
 )]
 #[group(skip)]
+#[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
 pub struct Build {
     #[command(flatten)]
+    #[cfg_attr(feature = "serde", serde(flatten))]
     pub common: CommonOptions,
 
     /// Path to Cargo.toml
     #[arg(long, value_name = "PATH", help_heading = heading::MANIFEST_OPTIONS)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub manifest_path: Option<PathBuf>,
 
     /// Build artifacts in release mode, with optimizations
     #[arg(short = 'r', long, help_heading = heading::COMPILATION_OPTIONS)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub release: bool,
 
     /// Ignore `rust-version` specification in packages
     #[arg(long)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub ignore_rust_version: bool,
 
     /// Output build graph in JSON (unstable)
     #[arg(long, help_heading = heading::COMPILATION_OPTIONS)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub unit_graph: bool,
 
     /// Package to build (see `cargo help pkgid`)
@@ -43,10 +52,12 @@ pub struct Build {
         num_args=0..=1,
         help_heading = heading::PACKAGE_SELECTION,
     )]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub packages: Vec<String>,
 
     /// Build all packages in the workspace
     #[arg(long, help_heading = heading::PACKAGE_SELECTION)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub workspace: bool,
 
     /// Exclude packages from the build
@@ -56,14 +67,17 @@ pub struct Build {
         action = ArgAction::Append,
         help_heading = heading::PACKAGE_SELECTION,
     )]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub exclude: Vec<String>,
 
     /// Alias for workspace (deprecated)
     #[arg(long, help_heading = heading::PACKAGE_SELECTION)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub all: bool,
 
     /// Build only this package's library
     #[arg(long, help_heading = heading::TARGET_SELECTION)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub lib: bool,
 
     /// Build only the specified binary
@@ -74,10 +88,12 @@ pub struct Build {
         num_args=0..=1,
         help_heading = heading::TARGET_SELECTION,
     )]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub bin: Vec<String>,
 
     /// Build all binaries
     #[arg(long, help_heading = heading::TARGET_SELECTION)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub bins: bool,
 
     /// Build only the specified example
@@ -88,10 +104,12 @@ pub struct Build {
         num_args=0..=1,
         help_heading = heading::TARGET_SELECTION,
     )]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub example: Vec<String>,
 
     /// Build all examples
     #[arg(long, help_heading = heading::TARGET_SELECTION)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub examples: bool,
 
     /// Build only the specified test target
@@ -101,10 +119,12 @@ pub struct Build {
         action = ArgAction::Append,
         help_heading = heading::TARGET_SELECTION,
     )]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub test: Vec<String>,
 
     /// Build all tests
     #[arg(long, help_heading = heading::TARGET_SELECTION)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub tests: bool,
 
     /// Build only the specified bench target
@@ -114,26 +134,32 @@ pub struct Build {
         action = ArgAction::Append,
         help_heading = heading::TARGET_SELECTION,
     )]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub bench: Vec<String>,
 
     /// Build all benches
     #[arg(long, help_heading = heading::TARGET_SELECTION)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub benches: bool,
 
     /// Build all targets
     #[arg(long, help_heading = heading::TARGET_SELECTION)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub all_targets: bool,
 
     /// Copy final artifacts to this directory (unstable)
     #[arg(long, alias = "out-dir", value_name = "PATH", help_heading = heading::COMPILATION_OPTIONS)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub artifact_dir: Option<PathBuf>,
 
     /// Output the build plan in JSON (unstable)
     #[arg(long, help_heading = heading::COMPILATION_OPTIONS)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub build_plan: bool,
 
     /// Outputs a future incompatibility report at the end of the build (unstable)
     #[arg(long)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub future_incompat_report: bool,
 }
 

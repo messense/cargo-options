@@ -4,6 +4,9 @@ use std::process::Command;
 
 use clap::{ArgAction, Parser};
 
+#[cfg(feature = "serde")]
+use serde::{Deserialize, Serialize};
+
 use crate::common::CommonOptions;
 use crate::heading;
 
@@ -14,52 +17,65 @@ use crate::heading;
     after_help = "Run `cargo help install` for more detailed information."
 )]
 #[group(skip)]
+#[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
 pub struct Install {
     #[command(flatten)]
+    #[cfg_attr(feature = "serde", serde(flatten))]
     pub common: CommonOptions,
 
     /// Specify a version to install
     #[arg(long, value_name = "VERSION", alias = "vers", requires = "crates")]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub version: Option<String>,
 
     /// Git URL to install the specified crate from
     #[arg(long, value_name = "URL", conflicts_with_all = ["path", "index", "registry"])]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub git: Option<String>,
 
     /// Branch to use when installing from git
     #[arg(long, value_name = "BRANCH", requires = "git")]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub branch: Option<String>,
 
     /// Tag to use when installing from git
     #[arg(long, value_name = "TAG", requires = "git")]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub tag: Option<String>,
 
     /// Specific commit to use when installing from git
     #[arg(long, value_name = "SHA", requires = "git")]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub rev: Option<String>,
 
     /// Filesystem path to local crate to install
     #[arg(long, value_name = "PATH", conflicts_with_all = ["git", "index", "registry"])]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub path: Option<PathBuf>,
 
     /// list all installed packages and their versions
     #[arg(long)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub list: bool,
 
     /// Force overwriting existing crates or binaries
     #[arg(short, long)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub force: bool,
 
     /// Do not save tracking information
     #[arg(long)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub no_track: bool,
 
     /// Build in debug mode (with the 'dev' profile) instead of release mode
     #[arg(long)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub debug: bool,
 
     /// Directory to install packages into
     #[arg(long, value_name = "DIR")]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub root: Option<PathBuf>,
 
     /// Registry index to install from
@@ -69,6 +85,7 @@ pub struct Install {
         conflicts_with_all = ["git", "path", "registry"],
         requires = "crates",
     )]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub index: Option<String>,
 
     /// Registry to use
@@ -78,6 +95,7 @@ pub struct Install {
         conflicts_with_all = ["git", "path", "index"],
         requires = "crates",
     )]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub registry: Option<String>,
 
     /// Install only the specified binary
@@ -88,10 +106,12 @@ pub struct Install {
         num_args=0..=1,
         help_heading = heading::TARGET_SELECTION,
     )]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub bin: Vec<String>,
 
     /// Install all binaries
     #[arg(long, help_heading = heading::TARGET_SELECTION)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub bins: bool,
 
     /// Install only the specified example
@@ -102,13 +122,16 @@ pub struct Install {
         num_args=0..=1,
         help_heading = heading::TARGET_SELECTION,
     )]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub example: Vec<String>,
 
     /// Install all examples
     #[arg(long, help_heading = heading::TARGET_SELECTION)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub examples: bool,
 
     #[arg(value_name = "crate", action = ArgAction::Append, num_args = 0..)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub crates: Vec<String>,
 }
 

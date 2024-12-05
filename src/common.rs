@@ -1,14 +1,19 @@
 use std::path::PathBuf;
 use std::process::Command;
 
+#[cfg(feature = "serde")]
+use serde::{Deserialize, Serialize};
+
 use crate::heading;
 use clap::{ArgAction, Parser};
 
 /// common cargo options
 #[derive(Clone, Debug, Default, Parser)]
+#[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
 pub struct CommonOptions {
     /// Do not print cargo log messages
     #[arg(short = 'q', long)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub quiet: bool,
 
     /// Number of parallel jobs, defaults to # of CPUs
@@ -18,10 +23,12 @@ pub struct CommonOptions {
         value_name = "N",
         help_heading = heading::COMPILATION_OPTIONS,
     )]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub jobs: Option<usize>,
 
     /// Do not abort the build as soon as there is an error (unstable)
     #[arg(long, help_heading = heading::COMPILATION_OPTIONS)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub keep_going: bool,
 
     /// Build artifacts with the specified Cargo profile
@@ -30,6 +37,7 @@ pub struct CommonOptions {
         value_name = "PROFILE-NAME",
         help_heading = heading::COMPILATION_OPTIONS,
     )]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub profile: Option<String>,
 
     /// Space or comma separated list of features to activate
@@ -39,14 +47,17 @@ pub struct CommonOptions {
         action = ArgAction::Append,
         help_heading = heading::FEATURE_SELECTION,
     )]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub features: Vec<String>,
 
     /// Activate all available features
     #[arg(long, help_heading = heading::FEATURE_SELECTION)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub all_features: bool,
 
     /// Do not activate the `default` feature
     #[arg(long, help_heading = heading::FEATURE_SELECTION)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub no_default_features: bool,
 
     /// Build for the target triple
@@ -57,6 +68,7 @@ pub struct CommonOptions {
         action = ArgAction::Append,
         help_heading = heading::COMPILATION_OPTIONS,
     )]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub target: Vec<String>,
 
     /// Directory for all generated artifacts
@@ -65,38 +77,47 @@ pub struct CommonOptions {
         value_name = "DIRECTORY",
         help_heading = heading::COMPILATION_OPTIONS,
     )]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub target_dir: Option<PathBuf>,
 
     /// Error format
     #[arg(long, value_name = "FMT", action = ArgAction::Append)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub message_format: Vec<String>,
 
     /// Use verbose output (-vv very verbose/build.rs output)
     #[arg(short = 'v', long, action = ArgAction::Count)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub verbose: u8,
 
     /// Coloring: auto, always, never
     #[arg(long, value_name = "WHEN")]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub color: Option<String>,
 
     /// Require Cargo.lock and cache are up to date
     #[arg(long, help_heading = heading::MANIFEST_OPTIONS)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub frozen: bool,
 
     /// Require Cargo.lock is up to date
     #[arg(long, help_heading = heading::MANIFEST_OPTIONS)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub locked: bool,
 
     /// Run without accessing the network
     #[arg(long, help_heading = heading::MANIFEST_OPTIONS)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub offline: bool,
 
     /// Override a configuration value (unstable)
     #[arg(long, value_name = "KEY=VALUE", action = ArgAction::Append)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub config: Vec<String>,
 
     /// Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details
     #[arg(short = 'Z', value_name = "FLAG", action = ArgAction::Append)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub unstable_flags: Vec<String>,
 
     /// Timing output formats (unstable) (comma separated): html, json
@@ -108,6 +129,7 @@ pub struct CommonOptions {
         require_equals = true,
         help_heading = heading::COMPILATION_OPTIONS,
     )]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub timings: Option<Vec<String>>,
 }
 

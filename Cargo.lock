@@ -99,6 +99,7 @@ version = "0.7.4"
 dependencies = [
  "anstyle",
  "clap",
+ "serde",
  "trycmd",
 ]
 

@@ -4,6 +4,9 @@ use std::process::Command;
 
 use clap::Parser;
 
+#[cfg(feature = "serde")]
+use serde::{Deserialize, Serialize};
+
 use crate::check::CheckOptions;
 use crate::common::CommonOptions;
 use crate::heading;
@@ -15,39 +18,49 @@ use crate::heading;
     after_help = "Run `cargo help clippy` for more detailed information."
 )]
 #[group(skip)]
+#[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
 pub struct Clippy {
     #[command(flatten)]
+    #[cfg_attr(feature = "serde", serde(flatten))]
     pub common: CommonOptions,
 
     #[command(flatten)]
+    #[cfg_attr(feature = "serde", serde(flatten))]
     pub check: CheckOptions,
 
     /// Path to Cargo.toml
     #[arg(long, value_name = "PATH", help_heading = heading::MANIFEST_OPTIONS)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub manifest_path: Option<PathBuf>,
 
     /// Build artifacts in release mode, with optimizations
     #[arg(short = 'r', long, help_heading = heading::COMPILATION_OPTIONS)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub release: bool,
 
     /// Ignore `rust-version` specification in packages
     #[arg(long)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub ignore_rust_version: bool,
 
     /// Output build graph in JSON (unstable)
     #[arg(long, help_heading = heading::COMPILATION_OPTIONS)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub unit_graph: bool,
 
     /// Ignore dependencies, run only on crate
     #[arg(long)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub no_deps: bool,
 
     /// Automatically apply lint suggestions (see `cargo help clippy`)
     #[arg(long)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub fix: bool,
 
     /// Arguments passed to rustc.
     #[arg(value_name = "args", trailing_var_arg = true, num_args = 0..)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub args: Vec<String>,
 }
 
