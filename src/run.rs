@@ -20,22 +20,27 @@ use crate::heading;
 #[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
 pub struct Run {
     #[command(flatten)]
+    #[cfg_attr(feature = "serde", serde(flatten))]
     pub common: CommonOptions,
 
     /// Path to Cargo.toml
     #[arg(long, value_name = "PATH", help_heading = heading::MANIFEST_OPTIONS)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub manifest_path: Option<PathBuf>,
 
     /// Build artifacts in release mode, with optimizations
     #[arg(short = 'r', long, help_heading = heading::COMPILATION_OPTIONS)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub release: bool,
 
     /// Ignore `rust-version` specification in packages
     #[arg(long)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub ignore_rust_version: bool,
 
     /// Output build graph in JSON (unstable)
     #[arg(long, help_heading = heading::COMPILATION_OPTIONS)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub unit_graph: bool,
 
     /// Package to run (see `cargo help pkgid`)
@@ -47,6 +52,7 @@ pub struct Run {
         num_args=0..=1,
         help_heading = heading::PACKAGE_SELECTION,
     )]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub packages: Vec<String>,
 
     /// Run the specified binary
@@ -57,6 +63,7 @@ pub struct Run {
         num_args=0..=1,
         help_heading = heading::TARGET_SELECTION,
     )]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub bin: Vec<String>,
 
     /// Run the specified example
@@ -67,10 +74,12 @@ pub struct Run {
         num_args=0..=1,
         help_heading = heading::TARGET_SELECTION,
     )]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub example: Vec<String>,
 
     /// Arguments for the binary to run
     #[arg(value_name = "args", trailing_var_arg = true, num_args = 0..)]
+    #[cfg_attr(feature = "serde", serde(default))]
     pub args: Vec<String>,
 }
 
