@@ -19,4 +19,4 @@ serde = { version = "1", features = ["derive"], optional = true }
 trycmd = { version = "0.14.0", features = ["examples"] }
 
 [features]
-serializable = ["serde"]
+serde = ["dep:serde"]
