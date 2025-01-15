@@ -1,13 +1,12 @@
 use std::ops::{Deref, DerefMut};
 use std::path::PathBuf;
-use std::process::Command;
 
 use clap::{ArgAction, Parser};
 
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
-use crate::common::CommonOptions;
+use crate::common::{Command, CommonOptions};
 use crate::heading;
 
 /// Run a binary or example of the local package

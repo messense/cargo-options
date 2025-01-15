@@ -1,5 +1,8 @@
 use std::path::PathBuf;
-use std::process::Command;
+#[cfg(not(feature = "tokio"))]
+pub use std::process::Command;
+#[cfg(feature = "tokio")]
+pub use tokio::process::Command;
 
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};

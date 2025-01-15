@@ -1,13 +1,11 @@
-use std::path::PathBuf;
-use std::process::Command;
-
 use clap::{ArgAction, Parser};
+use std::path::PathBuf;
 
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
+use crate::common::{Command, CommonOptions};
 use crate::heading;
-use crate::CommonOptions;
 
 /// Output the resolved dependencies of a package,
 /// the concrete used versions including overrides,

@@ -13,11 +13,18 @@ rust-version = "1.74.0"
 
 [dependencies]
 anstyle = "1.0.2"
-clap = { version = "4.5.23", features = ["derive", "env", "wrap_help", "unstable-styles"] }
+clap = { version = "4.5.23", features = [
+  "derive",
+  "env",
+  "wrap_help",
+  "unstable-styles",
+] }
 serde = { version = "1", features = ["derive"], optional = true }
+tokio = { version = "1", optional = true, features = ["process"] }
 
 [dev-dependencies]
 trycmd = { version = "0.15.0", features = ["examples"] }
 
 [features]
 serde = ["dep:serde"]
+tokio = ["dep:tokio"]

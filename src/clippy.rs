@@ -1,14 +1,12 @@
+use clap::Parser;
 use std::ops::{Deref, DerefMut};
 use std::path::PathBuf;
-use std::process::Command;
-
-use clap::Parser;
 
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
 use crate::check::CheckOptions;
-use crate::common::CommonOptions;
+use crate::common::{Command, CommonOptions};
 use crate::heading;
 
 /// Checks a package to catch common mistakes and improve your Rust code

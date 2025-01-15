@@ -1,13 +1,11 @@
+use clap::{ArgAction, Parser};
 use std::ops::{Deref, DerefMut};
 use std::path::PathBuf;
-use std::process::Command;
-
-use clap::{ArgAction, Parser};
 
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
-use crate::common::CommonOptions;
+use crate::common::{Command, CommonOptions};
 use crate::heading;
 
 /// `cargo check` options which are also a subset of `cargo clippy`
