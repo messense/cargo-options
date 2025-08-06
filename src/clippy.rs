@@ -58,6 +58,16 @@ pub struct Clippy {
     #[cfg_attr(feature = "serde", serde(default))]
     pub fix: bool,
 
+    /// Allow applying fixes even if the working directory has changes
+    #[arg(long, hide = true)]
+    #[cfg_attr(feature = "serde", serde(default))]
+    pub allow_dirty: bool,
+
+    /// Allow applying fixes even if the index has changes
+    #[arg(long, hide = true)]
+    #[cfg_attr(feature = "serde", serde(default))]
+    pub allow_staged: bool,
+
     /// Arguments passed to rustc.
     #[arg(value_name = "args", trailing_var_arg = true, num_args = 0..)]
     #[cfg_attr(feature = "serde", serde(default))]
@@ -90,6 +100,12 @@ impl Clippy {
         }
         if self.fix {
             cmd.arg("--fix");
+        }
+        if self.allow_dirty {
+            cmd.arg("--allow-dirty");
+        }
+        if self.allow_staged {
+            cmd.arg("--allow-staged");
         }
         if !self.args.is_empty() {
             cmd.arg("--");
