@@ -1,6 +1,6 @@
 [package]
 name = "cargo-options"
-version = "0.7.5"
+version = "0.7.6"
 edition = "2021"
 description = "Reusable common Cargo command line options"
 license = "MIT"
