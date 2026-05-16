@@ -7,17 +7,17 @@ license = "MIT"
 keywords = ["clap", "cargo", "cli"]
 readme = "README.md"
 repository = "https://github.com/messense/cargo-options"
-rust-version = "1.74.0"
+rust-version = "1.85.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-anstyle = "1.0.2"
-clap = { version = "4.5.23", features = ["derive", "env", "wrap_help", "unstable-styles"] }
-serde = { version = "1", features = ["derive"], optional = true }
+anstyle = "1.0.14"
+clap = { version = "4.6.1", features = ["derive", "env", "wrap_help", "unstable-styles"] }
+serde = { version = "1.0.228", features = ["derive"], optional = true }
 
 [dev-dependencies]
-trycmd = { version = "0.15.0", features = ["examples"] }
+trycmd = { version = "1.2.0", features = ["examples"] }
 
 [features]
 serde = ["dep:serde"]

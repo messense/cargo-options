@@ -29,12 +29,17 @@ pub struct Rustc {
     pub manifest_path: Option<PathBuf>,
 
     /// Build artifacts in release mode, with optimizations
-    #[arg(short = 'r', long, help_heading = heading::COMPILATION_OPTIONS)]
+    #[arg(
+        short = 'r',
+        long,
+        conflicts_with = "profile",
+        help_heading = heading::COMPILATION_OPTIONS,
+    )]
     #[cfg_attr(feature = "serde", serde(default))]
     pub release: bool,
 
     /// Ignore `rust-version` specification in packages
-    #[arg(long)]
+    #[arg(long, help_heading = heading::MANIFEST_OPTIONS)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub ignore_rust_version: bool,
 
@@ -43,7 +48,7 @@ pub struct Rustc {
     #[cfg_attr(feature = "serde", serde(default))]
     pub unit_graph: bool,
 
-    /// Package to build (see `cargo help pkgid`)
+    /// Package to build
     #[arg(
         short = 'p',
         long = "package",
@@ -72,7 +77,7 @@ pub struct Rustc {
     pub bin: Vec<String>,
 
     /// Build all binaries
-    #[arg(long)]
+    #[arg(long, help_heading = heading::TARGET_SELECTION)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub bins: bool,
 
@@ -102,7 +107,7 @@ pub struct Rustc {
     #[cfg_attr(feature = "serde", serde(default))]
     pub test: Vec<String>,
 
-    /// Build all tests
+    /// Build all targets that have `test = true` set
     #[arg(long, help_heading = heading::TARGET_SELECTION)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub tests: bool,
@@ -117,7 +122,7 @@ pub struct Rustc {
     #[cfg_attr(feature = "serde", serde(default))]
     pub bench: Vec<String>,
 
-    /// Build all benches
+    /// Build all targets that have `bench = true` set
     #[arg(long, help_heading = heading::TARGET_SELECTION)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub benches: bool,
@@ -133,17 +138,22 @@ pub struct Rustc {
     pub print: Option<String>,
 
     /// Comma separated list of types of crates for the compiler to emit
-    #[arg(long, value_name = "CRATE-TYPE", action = ArgAction::Append)]
+    #[arg(
+        long,
+        value_name = "CRATE-TYPE",
+        action = ArgAction::Append,
+        value_delimiter = ',',
+    )]
     #[cfg_attr(feature = "serde", serde(default))]
     pub crate_type: Vec<String>,
 
-    /// Outputs a future incompatibility report at the end of the build (unstable)
+    /// Outputs a future incompatibility report at the end of the build
     #[arg(long)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub future_incompat_report: bool,
 
-    /// Rustc flags
-    #[arg(value_name = "args", trailing_var_arg = true, num_args = 0..)]
+    /// Extra rustc flags
+    #[arg(value_name = "ARGS", trailing_var_arg = true, num_args = 0..)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub args: Vec<String>,
 }

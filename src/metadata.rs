@@ -62,7 +62,7 @@ pub struct Metadata {
     pub no_deps: bool,
 
     /// Path to Cargo.toml
-    #[arg(long, value_name = "PATH")]
+    #[arg(long, value_name = "PATH", help_heading = heading::MANIFEST_OPTIONS)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub manifest_path: Option<PathBuf>,
 
@@ -71,17 +71,17 @@ pub struct Metadata {
     #[cfg_attr(feature = "serde", serde(default))]
     pub format_version: Option<String>,
 
-    /// Coloring: auto, always, never
-    #[arg(long, value_name = "WHEN")]
+    /// Coloring
+    #[arg(long, value_name = "WHEN", value_parser = ["auto", "always", "never"])]
     #[cfg_attr(feature = "serde", serde(default))]
     pub color: Option<String>,
 
-    /// Require Cargo.lock and cache are up to date
+    /// Equivalent to specifying both --locked and --offline
     #[arg(long, help_heading = heading::MANIFEST_OPTIONS)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub frozen: bool,
 
-    /// Require Cargo.lock is up to date
+    /// Assert that `Cargo.lock` will remain unchanged
     #[arg(long, help_heading = heading::MANIFEST_OPTIONS)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub locked: bool,
@@ -91,8 +91,8 @@ pub struct Metadata {
     #[cfg_attr(feature = "serde", serde(default))]
     pub offline: bool,
 
-    /// Override a configuration value (unstable)
-    #[arg(long, value_name = "KEY=VALUE", action = ArgAction::Append)]
+    /// Override a configuration value
+    #[arg(long, value_name = "KEY=VALUE|PATH", action = ArgAction::Append)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub config: Vec<String>,
 

@@ -34,12 +34,17 @@ pub struct Clippy {
     pub manifest_path: Option<PathBuf>,
 
     /// Build artifacts in release mode, with optimizations
-    #[arg(short = 'r', long, help_heading = heading::COMPILATION_OPTIONS)]
+    #[arg(
+        short = 'r',
+        long,
+        conflicts_with = "profile",
+        help_heading = heading::COMPILATION_OPTIONS,
+    )]
     #[cfg_attr(feature = "serde", serde(default))]
     pub release: bool,
 
     /// Ignore `rust-version` specification in packages
-    #[arg(long)]
+    #[arg(long, help_heading = heading::MANIFEST_OPTIONS)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub ignore_rust_version: bool,
 
@@ -48,12 +53,12 @@ pub struct Clippy {
     #[cfg_attr(feature = "serde", serde(default))]
     pub unit_graph: bool,
 
-    /// Ignore dependencies, run only on crate
+    /// Run Clippy only on the given crate, without linting the dependencies
     #[arg(long)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub no_deps: bool,
 
-    /// Automatically apply lint suggestions (see `cargo help clippy`)
+    /// Automatically apply lint suggestions. This flag implies --no-deps and --all-targets
     #[arg(long)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub fix: bool,
@@ -68,8 +73,8 @@ pub struct Clippy {
     #[cfg_attr(feature = "serde", serde(default))]
     pub allow_staged: bool,
 
-    /// Arguments passed to rustc.
-    #[arg(value_name = "args", trailing_var_arg = true, num_args = 0..)]
+    /// Arguments passed to rustc
+    #[arg(value_name = "ARGS", trailing_var_arg = true, num_args = 0..)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub args: Vec<String>,
 }

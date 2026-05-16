@@ -10,7 +10,7 @@ use serde::{Deserialize, Serialize};
 use crate::common::CommonOptions;
 use crate::heading;
 
-/// Install a Rust binary. Default location is $HOME/.cargo/bin
+/// Install a Rust binary
 #[derive(Clone, Debug, Default, Parser)]
 #[command(
     display_order = 1,
@@ -48,12 +48,12 @@ pub struct Install {
     #[cfg_attr(feature = "serde", serde(default))]
     pub rev: Option<String>,
 
-    /// Filesystem path to local crate to install
+    /// Filesystem path to local crate to install from
     #[arg(long, value_name = "PATH", conflicts_with_all = ["git", "index", "registry"])]
     #[cfg_attr(feature = "serde", serde(default))]
     pub path: Option<PathBuf>,
 
-    /// list all installed packages and their versions
+    /// List all installed packages and their versions
     #[arg(long)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub list: bool,
@@ -63,13 +63,18 @@ pub struct Install {
     #[cfg_attr(feature = "serde", serde(default))]
     pub force: bool,
 
+    /// Perform all checks without installing (unstable)
+    #[arg(short = 'n', long)]
+    #[cfg_attr(feature = "serde", serde(default))]
+    pub dry_run: bool,
+
     /// Do not save tracking information
     #[arg(long)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub no_track: bool,
 
     /// Build in debug mode (with the 'dev' profile) instead of release mode
-    #[arg(long)]
+    #[arg(long, conflicts_with = "profile")]
     #[cfg_attr(feature = "serde", serde(default))]
     pub debug: bool,
 
@@ -97,6 +102,11 @@ pub struct Install {
     )]
     #[cfg_attr(feature = "serde", serde(default))]
     pub registry: Option<String>,
+
+    /// Ignore `rust-version` specification in packages
+    #[arg(long, help_heading = heading::MANIFEST_OPTIONS)]
+    #[cfg_attr(feature = "serde", serde(default))]
+    pub ignore_rust_version: bool,
 
     /// Install only the specified binary
     #[arg(
@@ -130,7 +140,8 @@ pub struct Install {
     #[cfg_attr(feature = "serde", serde(default))]
     pub examples: bool,
 
-    #[arg(value_name = "crate", action = ArgAction::Append, num_args = 0..)]
+    /// Select the package from the given source
+    #[arg(value_name = "CRATE[@<VER>]", action = ArgAction::Append, num_args = 0..)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub crates: Vec<String>,
 }
@@ -167,6 +178,9 @@ impl Install {
         if self.force {
             cmd.arg("--force");
         }
+        if self.dry_run {
+            cmd.arg("--dry-run");
+        }
         if self.no_track {
             cmd.arg("--no-track");
         }
@@ -181,6 +195,9 @@ impl Install {
         }
         if let Some(registry) = self.registry.as_ref() {
             cmd.arg("--registry").arg(registry);
+        }
+        if self.ignore_rust_version {
+            cmd.arg("--ignore-rust-version");
         }
         for bin in &self.bin {
             cmd.arg("--bin").arg(bin);

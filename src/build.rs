@@ -29,12 +29,17 @@ pub struct Build {
     pub manifest_path: Option<PathBuf>,
 
     /// Build artifacts in release mode, with optimizations
-    #[arg(short = 'r', long, help_heading = heading::COMPILATION_OPTIONS)]
+    #[arg(
+        short = 'r',
+        long,
+        conflicts_with = "profile",
+        help_heading = heading::COMPILATION_OPTIONS,
+    )]
     #[cfg_attr(feature = "serde", serde(default))]
     pub release: bool,
 
     /// Ignore `rust-version` specification in packages
-    #[arg(long)]
+    #[arg(long, help_heading = heading::MANIFEST_OPTIONS)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub ignore_rust_version: bool,
 
@@ -122,7 +127,7 @@ pub struct Build {
     #[cfg_attr(feature = "serde", serde(default))]
     pub test: Vec<String>,
 
-    /// Build all tests
+    /// Build all targets that have `test = true` set
     #[arg(long, help_heading = heading::TARGET_SELECTION)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub tests: bool,
@@ -137,7 +142,7 @@ pub struct Build {
     #[cfg_attr(feature = "serde", serde(default))]
     pub bench: Vec<String>,
 
-    /// Build all benches
+    /// Build all targets that have `bench = true` set
     #[arg(long, help_heading = heading::TARGET_SELECTION)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub benches: bool,
@@ -148,16 +153,16 @@ pub struct Build {
     pub all_targets: bool,
 
     /// Copy final artifacts to this directory (unstable)
-    #[arg(long, alias = "out-dir", value_name = "PATH", help_heading = heading::COMPILATION_OPTIONS)]
+    #[arg(long, value_name = "PATH", help_heading = heading::COMPILATION_OPTIONS)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub artifact_dir: Option<PathBuf>,
 
-    /// Output the build plan in JSON (unstable)
-    #[arg(long, help_heading = heading::COMPILATION_OPTIONS)]
+    /// Build only compile-time dependencies (unstable)
+    #[arg(long, hide = true)]
     #[cfg_attr(feature = "serde", serde(default))]
-    pub build_plan: bool,
+    pub compile_time_deps: bool,
 
-    /// Outputs a future incompatibility report at the end of the build (unstable)
+    /// Outputs a future incompatibility report at the end of the build
     #[arg(long)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub future_incompat_report: bool,
@@ -228,8 +233,8 @@ impl Build {
         if let Some(dir) = self.artifact_dir.as_ref() {
             cmd.arg("--artifact-dir").arg(dir);
         }
-        if self.build_plan {
-            cmd.arg("--build-plan");
+        if self.compile_time_deps {
+            cmd.arg("--compile-time-deps");
         }
         if self.future_incompat_report {
             cmd.arg("--future-incompat-report");

@@ -1,34 +1,33 @@
 Execute all unit and integration tests and build examples of a local package
 
-Usage: cargo-mimic[EXE] test [OPTIONS] [TESTNAME] [args]...
+Usage: cargo-mimic[EXE] test [OPTIONS] [TESTNAME] [-- [ARGS]...]
 
 Arguments:
   [TESTNAME]  If specified, only run tests containing this string in their names
-  [args]...   Arguments for the test binary
+  [ARGS]...   Arguments for the test binary
 
 Options:
-  -q, --quiet                   Do not print cargo log messages
-      --message-format <FMT>    Error format
-  -v, --verbose...              Use verbose output (-vv very verbose/build.rs output)
-      --color <WHEN>            Coloring: auto, always, never
-      --config <KEY=VALUE>      Override a configuration value (unstable)
-  -Z <FLAG>                     Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for
-                                details
-      --ignore-rust-version     Ignore `rust-version` specification in packages
-      --doc                     Test only this library's documentation
-      --no-run                  Compile, but don't run tests
-      --no-fail-fast            Run all tests regardless of failure
-      --future-incompat-report  Outputs a future incompatibility report at the end of the build
-                                (unstable)
-  -h, --help                    Print help
+  -q, --quiet                    Do not print cargo log messages
+      --message-format <FMT>     Error format [possible values: human, short, json,
+                                 json-diagnostic-short, json-diagnostic-rendered-ansi,
+                                 json-render-diagnostics]
+  -v, --verbose...               Use verbose output (-vv very verbose/build.rs output)
+      --color <WHEN>             Coloring [possible values: auto, always, never]
+      --config <KEY=VALUE|PATH>  Override a configuration value
+  -Z <FLAG>                      Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for
+                                 details
+      --no-run                   Compile, but don't run tests
+      --no-fail-fast             Run all tests regardless of failure
+      --future-incompat-report   Outputs a future incompatibility report at the end of the build
+  -h, --help                     Print help
 
 Compilation Options:
   -j, --jobs <N>                Number of parallel jobs, defaults to # of CPUs
-      --keep-going              Do not abort the build as soon as there is an error (unstable)
-      --profile <PROFILE-NAME>  Build artifacts with the specified Cargo profile
-      --target <TRIPLE>         Build for the target triple [env: CARGO_BUILD_TARGET=]
+      --keep-going              Do not abort the build as soon as there is an error
+      --profile <PROFILE-NAME>  Build artifacts with the specified profile
+      --target [<TRIPLE>]       Build for the target triple
       --target-dir <DIRECTORY>  Directory for all generated artifacts
-      --timings[=<FMTS>...]     Timing output formats (unstable) (comma separated): html, json
+      --timings                 Output a build timing report at the end of the build
   -r, --release                 Build artifacts in release mode, with optimizations
       --unit-graph              Output build graph in JSON (unstable)
 
@@ -38,15 +37,16 @@ Feature Selection:
       --no-default-features  Do not activate the `default` feature
 
 Manifest Options:
-      --frozen                Require Cargo.lock and cache are up to date
-      --locked                Require Cargo.lock is up to date
+      --frozen                Equivalent to specifying both --locked and --offline
+      --locked                Assert that `Cargo.lock` will remain unchanged
       --offline               Run without accessing the network
       --manifest-path <PATH>  Path to Cargo.toml
+      --ignore-rust-version   Ignore `rust-version` specification in packages
 
 Package Selection:
-  -p, --package [<SPEC>]  Package to build (see `cargo help pkgid`)
+  -p, --package [<SPEC>]  Package to run tests for
       --workspace         Test all packages in the workspace
-      --exclude <SPEC>    Exclude packages from the build
+      --exclude <SPEC>    Exclude packages from the test
       --all               Alias for workspace (deprecated)
 
 Target Selection:
@@ -56,10 +56,11 @@ Target Selection:
       --example [<NAME>]  Test only the specified example
       --examples          Test all examples
       --test <NAME>       Test only the specified test target
-      --tests             Test all tests
+      --tests             Test all targets that have `test = true` set
       --bench <NAME>      Test only the specified bench target
-      --benches           Test all benches
-      --all-targets       Test all targets
+      --benches           Test all targets that have `bench = true` set
+      --all-targets       Test all targets (does not include doctests)
+      --doc               Test only this library's documentation
 
 Run `cargo help test` for more detailed information.
 Run `cargo test -- --help` for test binary options.

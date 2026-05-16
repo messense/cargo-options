@@ -1,40 +1,44 @@
-Install a Rust binary. Default location is $HOME/.cargo/bin
+Install a Rust binary
 
-Usage: cargo-mimic[EXE] install [OPTIONS] [crate]...
+Usage: cargo-mimic[EXE] install [OPTIONS] [CRATE[@<VER>]]...
 
 Arguments:
-  [crate]...  
+  [CRATE[@<VER>]]...  Select the package from the given source
 
 Options:
-  -q, --quiet                 Do not print cargo log messages
-      --message-format <FMT>  Error format
-  -v, --verbose...            Use verbose output (-vv very verbose/build.rs output)
-      --color <WHEN>          Coloring: auto, always, never
-      --config <KEY=VALUE>    Override a configuration value (unstable)
-  -Z <FLAG>                   Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for
-                              details
-      --version <VERSION>     Specify a version to install
-      --git <URL>             Git URL to install the specified crate from
-      --branch <BRANCH>       Branch to use when installing from git
-      --tag <TAG>             Tag to use when installing from git
-      --rev <SHA>             Specific commit to use when installing from git
-      --path <PATH>           Filesystem path to local crate to install
-      --list                  list all installed packages and their versions
-  -f, --force                 Force overwriting existing crates or binaries
-      --no-track              Do not save tracking information
-      --debug                 Build in debug mode (with the 'dev' profile) instead of release mode
-      --root <DIR>            Directory to install packages into
-      --index <INDEX>         Registry index to install from
-      --registry <REGISTRY>   Registry to use
-  -h, --help                  Print help
+  -q, --quiet                    Do not print cargo log messages
+      --message-format <FMT>     Error format [possible values: human, short, json,
+                                 json-diagnostic-short, json-diagnostic-rendered-ansi,
+                                 json-render-diagnostics]
+  -v, --verbose...               Use verbose output (-vv very verbose/build.rs output)
+      --color <WHEN>             Coloring [possible values: auto, always, never]
+      --config <KEY=VALUE|PATH>  Override a configuration value
+  -Z <FLAG>                      Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for
+                                 details
+      --version <VERSION>        Specify a version to install
+      --git <URL>                Git URL to install the specified crate from
+      --branch <BRANCH>          Branch to use when installing from git
+      --tag <TAG>                Tag to use when installing from git
+      --rev <SHA>                Specific commit to use when installing from git
+      --path <PATH>              Filesystem path to local crate to install from
+      --list                     List all installed packages and their versions
+  -f, --force                    Force overwriting existing crates or binaries
+  -n, --dry-run                  Perform all checks without installing (unstable)
+      --no-track                 Do not save tracking information
+      --debug                    Build in debug mode (with the 'dev' profile) instead of release
+                                 mode
+      --root <DIR>               Directory to install packages into
+      --index <INDEX>            Registry index to install from
+      --registry <REGISTRY>      Registry to use
+  -h, --help                     Print help
 
 Compilation Options:
   -j, --jobs <N>                Number of parallel jobs, defaults to # of CPUs
-      --keep-going              Do not abort the build as soon as there is an error (unstable)
-      --profile <PROFILE-NAME>  Build artifacts with the specified Cargo profile
-      --target <TRIPLE>         Build for the target triple [env: CARGO_BUILD_TARGET=]
+      --keep-going              Do not abort the build as soon as there is an error
+      --profile <PROFILE-NAME>  Build artifacts with the specified profile
+      --target [<TRIPLE>]       Build for the target triple
       --target-dir <DIRECTORY>  Directory for all generated artifacts
-      --timings[=<FMTS>...]     Timing output formats (unstable) (comma separated): html, json
+      --timings                 Output a build timing report at the end of the build
 
 Feature Selection:
   -F, --features <FEATURES>  Space or comma separated list of features to activate
@@ -42,9 +46,10 @@ Feature Selection:
       --no-default-features  Do not activate the `default` feature
 
 Manifest Options:
-      --frozen   Require Cargo.lock and cache are up to date
-      --locked   Require Cargo.lock is up to date
-      --offline  Run without accessing the network
+      --frozen               Equivalent to specifying both --locked and --offline
+      --locked               Assert that `Cargo.lock` will remain unchanged
+      --offline              Run without accessing the network
+      --ignore-rust-version  Ignore `rust-version` specification in packages
 
 Target Selection:
       --bin [<NAME>]      Install only the specified binary
