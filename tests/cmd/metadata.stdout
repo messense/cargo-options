@@ -22,7 +22,7 @@ Feature Selection:
       --no-default-features  Do not activate the `default` feature
 
 Manifest Options:
-  -m, --manifest-path <PATH>  Path to Cargo.toml
+      --manifest-path <PATH>  Path to Cargo.toml
       --frozen                Equivalent to specifying both --locked and --offline
       --locked                Assert that `Cargo.lock` will remain unchanged
       --offline               Run without accessing the network

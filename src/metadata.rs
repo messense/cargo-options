@@ -62,7 +62,7 @@ pub struct Metadata {
     pub no_deps: bool,
 
     /// Path to Cargo.toml
-    #[arg(short = 'm', long, value_name = "PATH", help_heading = heading::MANIFEST_OPTIONS)]
+    #[arg(long, value_name = "PATH", help_heading = heading::MANIFEST_OPTIONS)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub manifest_path: Option<PathBuf>,
 
