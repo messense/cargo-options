@@ -16,22 +16,23 @@ pub struct CommonOptions {
     #[cfg_attr(feature = "serde", serde(default))]
     pub quiet: bool,
 
-    /// Number of parallel jobs, defaults to # of CPUs
+    /// Number of parallel jobs, defaults to # of CPUs.
     #[arg(
         short = 'j',
         long,
         value_name = "N",
+        allow_hyphen_values = true,
         help_heading = heading::COMPILATION_OPTIONS,
     )]
     #[cfg_attr(feature = "serde", serde(default))]
     pub jobs: Option<usize>,
 
-    /// Do not abort the build as soon as there is an error (unstable)
+    /// Do not abort the build as soon as there is an error
     #[arg(long, help_heading = heading::COMPILATION_OPTIONS)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub keep_going: bool,
 
-    /// Build artifacts with the specified Cargo profile
+    /// Build artifacts with the specified profile
     #[arg(
         long,
         value_name = "PROFILE-NAME",
@@ -64,7 +65,8 @@ pub struct CommonOptions {
     #[arg(
         long,
         value_name = "TRIPLE",
-        env = "CARGO_BUILD_TARGET",
+        num_args = 0..=1,
+        default_missing_value = "",
         action = ArgAction::Append,
         help_heading = heading::COMPILATION_OPTIONS,
     )]
@@ -81,7 +83,21 @@ pub struct CommonOptions {
     pub target_dir: Option<PathBuf>,
 
     /// Error format
-    #[arg(long, value_name = "FMT", action = ArgAction::Append)]
+    #[arg(
+        long,
+        value_name = "FMT",
+        action = ArgAction::Append,
+        value_delimiter = ',',
+        ignore_case = true,
+        value_parser = [
+            "human",
+            "short",
+            "json",
+            "json-diagnostic-short",
+            "json-diagnostic-rendered-ansi",
+            "json-render-diagnostics",
+        ],
+    )]
     #[cfg_attr(feature = "serde", serde(default))]
     pub message_format: Vec<String>,
 
@@ -90,17 +106,17 @@ pub struct CommonOptions {
     #[cfg_attr(feature = "serde", serde(default))]
     pub verbose: u8,
 
-    /// Coloring: auto, always, never
-    #[arg(long, value_name = "WHEN")]
+    /// Coloring
+    #[arg(long, value_name = "WHEN", value_parser = ["auto", "always", "never"])]
     #[cfg_attr(feature = "serde", serde(default))]
     pub color: Option<String>,
 
-    /// Require Cargo.lock and cache are up to date
+    /// Equivalent to specifying both --locked and --offline
     #[arg(long, help_heading = heading::MANIFEST_OPTIONS)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub frozen: bool,
 
-    /// Require Cargo.lock is up to date
+    /// Assert that `Cargo.lock` will remain unchanged
     #[arg(long, help_heading = heading::MANIFEST_OPTIONS)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub locked: bool,
@@ -110,8 +126,8 @@ pub struct CommonOptions {
     #[cfg_attr(feature = "serde", serde(default))]
     pub offline: bool,
 
-    /// Override a configuration value (unstable)
-    #[arg(long, value_name = "KEY=VALUE", action = ArgAction::Append)]
+    /// Override a configuration value
+    #[arg(long, value_name = "KEY=VALUE|PATH", action = ArgAction::Append)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub config: Vec<String>,
 
@@ -120,17 +136,10 @@ pub struct CommonOptions {
     #[cfg_attr(feature = "serde", serde(default))]
     pub unstable_flags: Vec<String>,
 
-    /// Timing output formats (unstable) (comma separated): html, json
-    #[arg(
-        long,
-        value_name = "FMTS",
-        num_args = 0..,
-        value_delimiter = ',',
-        require_equals = true,
-        help_heading = heading::COMPILATION_OPTIONS,
-    )]
+    /// Output a build timing report at the end of the build
+    #[arg(long, help_heading = heading::COMPILATION_OPTIONS)]
     #[cfg_attr(feature = "serde", serde(default))]
-    pub timings: Option<Vec<String>>,
+    pub timings: bool,
 }
 
 impl CommonOptions {
@@ -166,7 +175,10 @@ impl CommonOptions {
             .map(|target| target.split_once('.').map(|(t, _)| t).unwrap_or(target))
             .collect::<Vec<&str>>();
         rust_targets.iter().for_each(|target| {
-            cmd.arg("--target").arg(target);
+            cmd.arg("--target");
+            if !target.is_empty() {
+                cmd.arg(target);
+            }
         });
 
         if let Some(dir) = self.target_dir.as_ref() {
@@ -196,13 +208,8 @@ impl CommonOptions {
         for flag in &self.unstable_flags {
             cmd.arg("-Z").arg(flag);
         }
-        if let Some(timings) = &self.timings {
-            if timings.is_empty() {
-                cmd.arg("--timings");
-            } else {
-                let timings: Vec<_> = timings.iter().map(|x| x.as_str()).collect();
-                cmd.arg(format!("--timings={}", timings.join(",")));
-            }
+        if self.timings {
+            cmd.arg("--timings");
         }
     }
 

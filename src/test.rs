@@ -24,17 +24,22 @@ pub struct Test {
     pub common: CommonOptions,
 
     /// Path to Cargo.toml
-    #[arg(long, value_name = "PATH", help_heading = heading::MANIFEST_OPTIONS)]
+    #[arg(short = 'm', long, value_name = "PATH", help_heading = heading::MANIFEST_OPTIONS)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub manifest_path: Option<PathBuf>,
 
     /// Build artifacts in release mode, with optimizations
-    #[arg(short = 'r', long, help_heading = heading::COMPILATION_OPTIONS)]
+    #[arg(
+        short = 'r',
+        long,
+        conflicts_with = "profile",
+        help_heading = heading::COMPILATION_OPTIONS,
+    )]
     #[cfg_attr(feature = "serde", serde(default))]
     pub release: bool,
 
     /// Ignore `rust-version` specification in packages
-    #[arg(long)]
+    #[arg(long, help_heading = heading::MANIFEST_OPTIONS)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub ignore_rust_version: bool,
 
@@ -43,7 +48,7 @@ pub struct Test {
     #[cfg_attr(feature = "serde", serde(default))]
     pub unit_graph: bool,
 
-    /// Package to build (see `cargo help pkgid`)
+    /// Package to run tests for
     #[arg(
         short = 'p',
         long = "package",
@@ -60,7 +65,7 @@ pub struct Test {
     #[cfg_attr(feature = "serde", serde(default))]
     pub workspace: bool,
 
-    /// Exclude packages from the build
+    /// Exclude packages from the test
     #[arg(
         long,
         value_name = "SPEC",
@@ -122,7 +127,7 @@ pub struct Test {
     #[cfg_attr(feature = "serde", serde(default))]
     pub test: Vec<String>,
 
-    /// Test all tests
+    /// Test all targets that have `test = true` set
     #[arg(long, help_heading = heading::TARGET_SELECTION)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub tests: bool,
@@ -137,18 +142,18 @@ pub struct Test {
     #[cfg_attr(feature = "serde", serde(default))]
     pub bench: Vec<String>,
 
-    /// Test all benches
+    /// Test all targets that have `bench = true` set
     #[arg(long, help_heading = heading::TARGET_SELECTION)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub benches: bool,
 
-    /// Test all targets
+    /// Test all targets (does not include doctests)
     #[arg(long, help_heading = heading::TARGET_SELECTION)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub all_targets: bool,
 
     /// Test only this library's documentation
-    #[arg(long)]
+    #[arg(long, help_heading = heading::TARGET_SELECTION)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub doc: bool,
 
@@ -162,7 +167,7 @@ pub struct Test {
     #[cfg_attr(feature = "serde", serde(default))]
     pub no_fail_fast: bool,
 
-    /// Outputs a future incompatibility report at the end of the build (unstable)
+    /// Outputs a future incompatibility report at the end of the build
     #[arg(long)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub future_incompat_report: bool,
@@ -173,7 +178,7 @@ pub struct Test {
     pub test_name: Option<String>,
 
     /// Arguments for the test binary
-    #[arg(value_name = "args", trailing_var_arg = true, num_args = 0..)]
+    #[arg(value_name = "ARGS", last = true, num_args = 0..)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub args: Vec<String>,
 }
@@ -252,9 +257,11 @@ impl Test {
         if self.future_incompat_report {
             cmd.arg("--future-incompat-report");
         }
-        cmd.arg("--");
-        if let Some(test_name) = self.test_name.as_ref() {
-            cmd.arg(test_name);
+        if self.test_name.is_some() || !self.args.is_empty() {
+            cmd.arg("--");
+            if let Some(test_name) = self.test_name.as_ref() {
+                cmd.arg(test_name);
+            }
         }
         cmd.args(&self.args);
 

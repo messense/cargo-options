@@ -1,32 +1,34 @@
 Checks a package to catch common mistakes and improve your Rust code
 
-Usage: cargo-mimic[EXE] clippy [OPTIONS] [args]...
+Usage: cargo-mimic[EXE] clippy [OPTIONS] [ARGS]...
 
 Arguments:
-  [args]...  Arguments passed to rustc
+  [ARGS]...  Arguments passed to rustc
 
 Options:
-  -q, --quiet                   Do not print cargo log messages
-      --message-format <FMT>    Error format
-  -v, --verbose...              Use verbose output (-vv very verbose/build.rs output)
-      --color <WHEN>            Coloring: auto, always, never
-      --config <KEY=VALUE>      Override a configuration value (unstable)
-  -Z <FLAG>                     Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for
-                                details
-      --future-incompat-report  Outputs a future incompatibility report at the end of the build
-                                (unstable)
-      --ignore-rust-version     Ignore `rust-version` specification in packages
-      --no-deps                 Ignore dependencies, run only on crate
-      --fix                     Automatically apply lint suggestions (see `cargo help clippy`)
-  -h, --help                    Print help
+  -q, --quiet                    Do not print cargo log messages
+      --message-format <FMT>     Error format [possible values: human, short, json,
+                                 json-diagnostic-short, json-diagnostic-rendered-ansi,
+                                 json-render-diagnostics]
+  -v, --verbose...               Use verbose output (-vv very verbose/build.rs output)
+      --color <WHEN>             Coloring [possible values: auto, always, never]
+      --config <KEY=VALUE|PATH>  Override a configuration value
+  -Z <FLAG>                      Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for
+                                 details
+      --future-incompat-report   Outputs a future incompatibility report at the end of the build
+      --no-deps                  Run Clippy only on the given crate, without linting the
+                                 dependencies
+      --fix                      Automatically apply lint suggestions. This flag implies --no-deps
+                                 and --all-targets
+  -h, --help                     Print help
 
 Compilation Options:
   -j, --jobs <N>                Number of parallel jobs, defaults to # of CPUs
-      --keep-going              Do not abort the build as soon as there is an error (unstable)
-      --profile <PROFILE-NAME>  Build artifacts with the specified Cargo profile
-      --target <TRIPLE>         Build for the target triple [env: CARGO_BUILD_TARGET=]
+      --keep-going              Do not abort the build as soon as there is an error
+      --profile <PROFILE-NAME>  Build artifacts with the specified profile
+      --target [<TRIPLE>]       Build for the target triple
       --target-dir <DIRECTORY>  Directory for all generated artifacts
-      --timings[=<FMTS>...]     Timing output formats (unstable) (comma separated): html, json
+      --timings                 Output a build timing report at the end of the build
   -r, --release                 Build artifacts in release mode, with optimizations
       --unit-graph              Output build graph in JSON (unstable)
 
@@ -36,15 +38,16 @@ Feature Selection:
       --no-default-features  Do not activate the `default` feature
 
 Manifest Options:
-      --frozen                Require Cargo.lock and cache are up to date
-      --locked                Require Cargo.lock is up to date
+      --frozen                Equivalent to specifying both --locked and --offline
+      --locked                Assert that `Cargo.lock` will remain unchanged
       --offline               Run without accessing the network
-      --manifest-path <PATH>  Path to Cargo.toml
+  -m, --manifest-path <PATH>  Path to Cargo.toml
+      --ignore-rust-version   Ignore `rust-version` specification in packages
 
 Package Selection:
-  -p, --package [<SPEC>]  Package to build (see `cargo help pkgid`)
+  -p, --package [<SPEC>]  Package(s) to check
       --workspace         Check all packages in the workspace
-      --exclude <SPEC>    Exclude packages from the build
+      --exclude <SPEC>    Exclude packages from the check
       --all               Alias for workspace (deprecated)
 
 Target Selection:
@@ -54,9 +57,9 @@ Target Selection:
       --example [<NAME>]  Check only the specified example
       --examples          Check all examples
       --test <NAME>       Check only the specified test target
-      --tests             Check all tests
+      --tests             Check all targets that have `test = true` set
       --bench <NAME>      Check only the specified bench target
-      --benches           Check all benches
+      --benches           Check all targets that have `bench = true` set
       --all-targets       Check all targets
 
 Run `cargo help clippy` for more detailed information.

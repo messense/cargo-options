@@ -158,17 +158,22 @@ pub struct Doc {
     pub doc: DocOptions,
 
     /// Path to Cargo.toml
-    #[arg(long, value_name = "PATH", help_heading = heading::MANIFEST_OPTIONS)]
+    #[arg(short = 'm', long, value_name = "PATH", help_heading = heading::MANIFEST_OPTIONS)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub manifest_path: Option<PathBuf>,
 
     /// Build artifacts in release mode, with optimizations
-    #[arg(short = 'r', long, help_heading = heading::COMPILATION_OPTIONS)]
+    #[arg(
+        short = 'r',
+        long,
+        conflicts_with = "profile",
+        help_heading = heading::COMPILATION_OPTIONS,
+    )]
     #[cfg_attr(feature = "serde", serde(default))]
     pub release: bool,
 
     /// Ignore `rust-version` specification in packages
-    #[arg(long)]
+    #[arg(long, help_heading = heading::MANIFEST_OPTIONS)]
     #[cfg_attr(feature = "serde", serde(default))]
     pub ignore_rust_version: bool,
 

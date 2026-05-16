@@ -9,10 +9,9 @@ Options:
       --filter-platform <TRIPLE>  Only include resolve dependencies matching the given target-triple
       --no-deps                   Output information only about the workspace members and don't
                                   fetch dependencies
-      --manifest-path <PATH>      Path to Cargo.toml
       --format-version <VERSION>  Format version [possible values: 1]
-      --color <WHEN>              Coloring: auto, always, never
-      --config <KEY=VALUE>        Override a configuration value (unstable)
+      --color <WHEN>              Coloring [possible values: auto, always, never]
+      --config <KEY=VALUE|PATH>   Override a configuration value
   -Z <FLAG>                       Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for
                                   details
   -h, --help                      Print help
@@ -23,8 +22,9 @@ Feature Selection:
       --no-default-features  Do not activate the `default` feature
 
 Manifest Options:
-      --frozen   Require Cargo.lock and cache are up to date
-      --locked   Require Cargo.lock is up to date
-      --offline  Run without accessing the network
+  -m, --manifest-path <PATH>  Path to Cargo.toml
+      --frozen                Equivalent to specifying both --locked and --offline
+      --locked                Assert that `Cargo.lock` will remain unchanged
+      --offline               Run without accessing the network
 
 Run `cargo help metadata` for more detailed information.
