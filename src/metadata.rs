@@ -6,8 +6,8 @@ use clap::{ArgAction, Parser};
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
-use crate::heading;
 use crate::CommonOptions;
+use crate::heading;
 
 /// Output the resolved dependencies of a package,
 /// the concrete used versions including overrides,
