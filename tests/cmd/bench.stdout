@@ -1,6 +1,6 @@
 Execute all benchmarks of a local package
 
-Usage: cargo-mimic bench [OPTIONS] [BENCHNAME] [-- [ARGS]...]
+Usage: cargo-mimic[EXE] bench [OPTIONS] [BENCHNAME] [-- [ARGS]...]
 
 Arguments:
   [BENCHNAME]  If specified, only run benches containing this string in their names
