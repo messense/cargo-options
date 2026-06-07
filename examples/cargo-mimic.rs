@@ -1,4 +1,4 @@
-use cargo_options::{Build, Check, Clippy, Doc, Install, Metadata, Run, Rustc, Test};
+use cargo_options::{Bench, Build, Check, Clippy, Doc, Install, Metadata, Run, Rustc, Test};
 use clap::Parser;
 
 #[derive(Debug, Parser)]
@@ -8,6 +8,8 @@ use clap::Parser;
     styles = cargo_options::styles(),
 )]
 enum Opt {
+    #[command(name = "bench")]
+    Bench(Bench),
     #[command(name = "build", aliases = &["b"] )]
     Build(Build),
     #[command(name = "clippy")]

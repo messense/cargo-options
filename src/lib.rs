@@ -1,3 +1,4 @@
+mod bench;
 mod build;
 mod check;
 mod clippy;
@@ -32,6 +33,7 @@ pub fn styles() -> clap::builder::Styles {
 
 // Specify crate to satisfy naming overlap w/ rustc clippy
 pub use crate::clippy::Clippy;
+pub use bench::Bench;
 pub use build::Build;
 pub use check::Check;
 pub use common::CommonOptions;

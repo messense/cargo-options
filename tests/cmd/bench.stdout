@@ -1,0 +1,58 @@
+Execute all benchmarks of a local package
+
+Usage: cargo-mimic bench [OPTIONS] [BENCHNAME] [-- [ARGS]...]
+
+Arguments:
+  [BENCHNAME]  If specified, only run benches containing this string in their names
+  [ARGS]...    Arguments for the bench binary
+
+Options:
+      --no-run                   Compile, but don't run benchmarks
+      --no-fail-fast             Run all benchmarks regardless of failure
+      --message-format <FMT>     Error format [possible values: human, short, json, json-diagnostic-short, json-diagnostic-rendered-ansi, json-render-diagnostics]
+  -v, --verbose...               Use verbose output (-vv very verbose/build.rs output)
+  -q, --quiet                    Do not print cargo log messages
+      --color <WHEN>             Coloring [possible values: auto, always, never]
+      --config <KEY=VALUE|PATH>  Override a configuration value
+  -Z <FLAG>                      Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details
+  -h, --help                     Print help
+
+Package Selection:
+  -p, --package [<SPEC>]  Package to run benchmarks for
+      --workspace         Benchmark all packages in the workspace
+      --exclude <SPEC>    Exclude packages from the benchmark
+      --all               Alias for --workspace (deprecated)
+
+Target Selection:
+      --lib               Benchmark only this package's library
+      --bins              Benchmark all binaries
+      --bin [<NAME>]      Benchmark only the specified binary
+      --examples          Benchmark all examples
+      --example [<NAME>]  Benchmark only the specified example
+      --tests             Benchmark all targets that have `test = true` set
+      --test [<NAME>]     Benchmark only the specified test target
+      --benches           Benchmark all targets that have `bench = true` set
+      --bench [<NAME>]    Benchmark only the specified bench target
+      --all-targets       Benchmark all targets
+
+Feature Selection:
+  -F, --features <FEATURES>  Space or comma separated list of features to activate
+      --all-features         Activate all available features
+      --no-default-features  Do not activate the `default` feature
+
+Compilation Options:
+  -j, --jobs <N>                Number of parallel jobs, defaults to # of CPUs.
+      --profile <PROFILE-NAME>  Build artifacts with the specified profile
+      --target [<TRIPLE>]       Build for the target triple
+      --target-dir <DIRECTORY>  Directory for all generated artifacts
+      --unit-graph              Output build graph in JSON (unstable)
+      --timings                 Output a build timing report at the end of the build
+
+Manifest Options:
+      --manifest-path <PATH>  Path to Cargo.toml
+      --ignore-rust-version   Ignore `rust-version` specification in packages
+      --locked                Assert that `Cargo.lock` will remain unchanged
+      --offline               Run without accessing the network
+      --frozen                Equivalent to specifying both --locked and --offline
+
+Run `cargo help bench` for more detailed information.
