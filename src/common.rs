@@ -172,7 +172,13 @@ impl CommonOptions {
         let rust_targets = self
             .target
             .iter()
-            .map(|target| target.split_once('.').map(|(t, _)| t).unwrap_or(target))
+            .map(|target| {
+                if target.ends_with(".json") {
+                    target
+                } else {
+                    target.split_once('.').map(|(t, _)| t).unwrap_or(target)
+                }
+            })
             .collect::<Vec<&str>>();
         rust_targets.iter().for_each(|target| {
             cmd.arg("--target");
